@@ -657,8 +657,7 @@ body.is-loading { overflow: hidden; }
 @media (max-width: 760px) {
   .about-grid { grid-template-columns: 1fr; }
   .stamp { justify-self: start; }
-  .topbar-brand { font-size: 14px; }
-  .topbar-nav { display: none; }
+  .topbar { display: none; }
 
   .whatsapp-float { display: none; }
 
