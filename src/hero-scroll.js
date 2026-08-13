@@ -81,16 +81,36 @@ export function initHeroScroll() {
   let currentIndex = -1;
   const updateHeroReveal = setupHeroReveal();
 
+  // Canvas minúsculo pro fundo ambiente: ampliá-lo já produz um desfoque
+  // barato (sem ctx.filter, que é caro em canvas grande a cada frame).
+  const AMBIENT_W = 24;
+  const ambient = document.createElement("canvas");
+  const ambientCtx = ambient.getContext("2d");
+
   function drawIndex(index) {
     const img = images[index];
     if (!img || !img.complete || img.naturalWidth === 0) return;
     currentIndex = index;
     const cw = canvas.width;
     const ch = canvas.height;
-    const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
-    const dw = img.naturalWidth * scale;
-    const dh = img.naturalHeight * scale;
-    ctx.clearRect(0, 0, cw, ch);
+    const iw = img.naturalWidth;
+    const ih = img.naturalHeight;
+
+    // Fundo: cobre o canvas inteiro (recortado), ampliado a partir de uma
+    // versão minúscula da mesma imagem — vira um borrão que preenche as
+    // sobras sem tarja preta e sem cortar o biscoito principal.
+    ambient.width = AMBIENT_W;
+    ambient.height = Math.max(1, Math.round((AMBIENT_W * ch) / cw));
+    const as = Math.max(ambient.width / iw, ambient.height / ih);
+    ambientCtx.drawImage(img, (ambient.width - iw * as) / 2, (ambient.height - ih * as) / 2, iw * as, ih * as);
+    ctx.drawImage(ambient, 0, 0, ambient.width, ambient.height, 0, 0, cw, ch);
+    ctx.fillStyle = "rgba(59,36,24,0.55)";
+    ctx.fillRect(0, 0, cw, ch);
+
+    // Frente: a imagem inteira, sem cortar nada (contain, não cover).
+    const scale = Math.min(cw / iw, ch / ih);
+    const dw = iw * scale;
+    const dh = ih * scale;
     ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
   }
 
