@@ -260,7 +260,7 @@ body.is-loading { overflow: hidden; }
   transform: translateY(16px) scale(0.85);
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-content { transform: none !important; }
+  .hero-content { transform: none !important; opacity: 1 !important; }
   .hero-cta { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
 }
 .hero-eyebrow {
