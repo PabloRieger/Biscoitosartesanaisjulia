@@ -1,5 +1,5 @@
 const SECTIONS = [
-  { id: "topo", key: "inicio" },
+  { id: "main", key: "inicio" },
   { id: "sobre", key: "sobre" },
   { id: "cardapio", key: "cardapio" },
 ];

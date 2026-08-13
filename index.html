@@ -5,12 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Biscoitos da Julia — feitos por encomenda</title>
   <meta name="description" content="Biscoitos artesanais feitos por encomenda: amanteigado, casadinho de goiabada, chocolate e Nutella com café. Receita de família." />
+  <meta name="theme-color" content="#3B2418" />
+  <link rel="canonical" href="https://pablorieger.github.io/Biscoitosartesanaisjulia/" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23F2A93B'/%3E%3Ccircle cx='11' cy='11.5' r='2.6' fill='%233B2418'/%3E%3Ccircle cx='21.5' cy='14' r='2.1' fill='%233B2418'/%3E%3Ccircle cx='14.5' cy='21.5' r='2.4' fill='%233B2418'/%3E%3Ccircle cx='22' cy='22' r='1.7' fill='%233B2418'/%3E%3C/svg%3E" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Biscoitos da Julia" />
+  <meta property="og:title" content="Biscoitos da Julia — feitos por encomenda" />
+  <meta property="og:description" content="Biscoitos artesanais de receita de família: amanteigado, casadinho de goiabada, chocolate e Nutella com café. Peça pelo WhatsApp." />
+  <meta property="og:url" content="https://pablorieger.github.io/Biscoitosartesanaisjulia/" />
+  <meta property="og:image" content="https://pablorieger.github.io/Biscoitosartesanaisjulia/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Biscoito gigante sendo esculpido por trabalhadores, com o nome Biscoitos da Julia" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/src/style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "Biscoitos da Julia",
+    "description": "Biscoitos artesanais feitos por encomenda, de receita de família.",
+    "image": "https://pablorieger.github.io/Biscoitosartesanaisjulia/og-image.jpg",
+    "url": "https://pablorieger.github.io/Biscoitosartesanaisjulia/",
+    "telephone": "+5567991105206",
+    "priceRange": "R$ 12 - R$ 15",
+    "servesCuisine": "Biscoitos artesanais",
+    "areaServed": "Mato Grosso do Sul",
+    "hasMenu": {
+      "@type": "Menu",
+      "hasMenuSection": {
+        "@type": "MenuSection",
+        "name": "Biscoitos",
+        "hasMenuItem": [
+          { "@type": "MenuItem", "name": "Amanteigado", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "BRL" } },
+          { "@type": "MenuItem", "name": "Casadinho de goiabada", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "BRL" } },
+          { "@type": "MenuItem", "name": "Chocolate", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "BRL" } },
+          { "@type": "MenuItem", "name": "Nutella e café", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "BRL" } }
+        ]
+      }
+    }
+  }
+  </script>
 </head>
 <body>
+
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+  <div class="ambient" aria-hidden="true"></div>
 
   <div class="preloader" data-preloader role="status" aria-label="Carregando">
     <div class="preloader-mark">
@@ -33,7 +81,7 @@
     </a>
   </header>
 
-  <main id="topo">
+  <main id="main" tabindex="-1">
     <section class="hero-spacer">
       <div class="hero">
         <canvas class="hero-canvas" aria-hidden="true"></canvas>
@@ -111,24 +159,30 @@
     </section>
 
     <section class="how" id="como-funciona">
-      <p class="section-eyebrow center">Como funciona</p>
-      <h2 class="section-title center">Do pedido até a sua mesa</h2>
-      <div class="how-grid">
-        <div class="how-step reveal">
-          <span class="how-num">1</span>
-          <h3>Escolha os sabores</h3>
-          <p>Dá pra misturar quantos sabores quiser no pedido.</p>
+      <div class="how-layout">
+        <div class="how-aside">
+          <p class="section-eyebrow">Como funciona</p>
+          <h2 class="section-title">Do pedido até<br />a sua mesa</h2>
+          <p class="how-lead">Três passos, e nenhum deles é preencher formulário.</p>
         </div>
-        <div class="how-step reveal">
-          <span class="how-num">2</span>
-          <h3>Chame no WhatsApp</h3>
-          <p>Com um pouco de antecedência — não tem horário fixo de atendimento, mas encomenda de última hora fica mais difícil.</p>
-        </div>
-        <div class="how-step reveal">
-          <span class="how-num">3</span>
-          <h3>Combine e receba</h3>
-          <p>A gente combina entrega ou retirada e a forma de pagamento por lá mesmo.</p>
-        </div>
+
+        <ol class="how-steps">
+          <li class="how-step reveal">
+            <span class="how-num">1</span>
+            <h3>Escolha os sabores</h3>
+            <p>Dá pra misturar quantos sabores quiser no pedido.</p>
+          </li>
+          <li class="how-step reveal">
+            <span class="how-num">2</span>
+            <h3>Chame no WhatsApp</h3>
+            <p>Com um pouco de antecedência — não tem horário fixo de atendimento, mas encomenda de última hora fica mais difícil.</p>
+          </li>
+          <li class="how-step reveal">
+            <span class="how-num">3</span>
+            <h3>Combine e receba</h3>
+            <p>A gente combina entrega ou retirada e a forma de pagamento por lá mesmo.</p>
+          </li>
+        </ol>
       </div>
     </section>
   </main>
@@ -145,7 +199,7 @@
   </a>
 
   <nav class="bottom-nav" aria-label="Navegação principal">
-    <a href="#topo" class="bottom-nav-item" data-bottom-nav="inicio">
+    <a href="#main" class="bottom-nav-item" data-bottom-nav="inicio">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8" /><path d="M5 10v10h5v-6h4v6h5V10" /></svg>
       <span>Início</span>
     </a>

@@ -121,9 +121,12 @@ export function initHeroScroll() {
   function drawIndex(index) {
     const img = images[index];
     if (!img || !img.complete || img.naturalWidth === 0) return;
-    currentIndex = index;
     const cw = canvas.width;
     const ch = canvas.height;
+    // Canvas ainda sem dimensão (pintura pedida antes do primeiro layout):
+    // desenhar aqui lança InvalidStateError e não pintaria nada de útil.
+    if (!cw || !ch) return;
+    currentIndex = index;
     const iw = img.naturalWidth;
     const ih = img.naturalHeight;
 
@@ -189,11 +192,54 @@ export function initHeroScroll() {
 
   function onResize() {
     resize();
-    onScroll();
+    paintCurrent();
   }
 
   window.addEventListener("resize", onResize);
-  window.addEventListener("scroll", onScrollThrottled, { passive: true });
+
+  // O scrub é armado e desarmado ao vivo: se a pessoa liga "reduzir
+  // movimento" com a página aberta, o hero pousa no estado final em vez
+  // de continuar preso ao scroll; se desligar, volta a responder.
+  const reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  // null = ainda não decidido; sem isso a primeira chamada com "reduzir
+  // movimento" já ligado sairia cedo e nunca pousaria o hero.
+  let scrubOn = null;
+
+  function enableScrub() {
+    if (scrubOn === true) return;
+    scrubOn = true;
+    window.addEventListener("scroll", onScrollThrottled, { passive: true });
+    onScroll();
+  }
+
+  // Estado final e legível, sem meia animação congelada.
+  function paintRestState() {
+    drawIndex(nearestLoadedIndex(FRAME_COUNT - 1));
+    updateHeroReveal(0.8);
+  }
+
+  // Todo repaint passa por aqui, senão o carregamento do primeiro frame
+  // sobrescreveria o estado pousado de quem pediu menos movimento.
+  function paintCurrent() {
+    if (reduceQuery.matches) paintRestState();
+    else onScroll();
+  }
+
+  function disableScrub() {
+    if (scrubOn === false) return;
+    const wasOn = scrubOn === true;
+    scrubOn = false;
+    if (wasOn) window.removeEventListener("scroll", onScrollThrottled);
+    paintRestState();
+  }
+
+  function applyHeroMode() {
+    if (reduceQuery.matches) disableScrub();
+    else enableScrub();
+  }
+
+  reduceQuery.addEventListener("change", applyHeroMode);
+  applyHeroMode();
 
   let loadedCount = 0;
   const loads = [];
@@ -206,7 +252,7 @@ export function initHeroScroll() {
           loadedCount++;
           if (i === 0) {
             resize();
-            drawIndex(0);
+            paintCurrent();
           }
           resolve();
         };
@@ -220,7 +266,7 @@ export function initHeroScroll() {
   }
 
   resize();
-  onScroll();
+  paintCurrent();
 
   return {
     ready: Promise.all(loads).then(() => {}),

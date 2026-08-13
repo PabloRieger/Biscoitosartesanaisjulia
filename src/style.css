@@ -1,17 +1,28 @@
 :root {
   --cream: #FFF7E8;
   --coral: #E2572B;
+  /* Coral escurecido só para texto pequeno sobre creme: o coral da marca
+     não alcança 4.5:1 nesse tamanho. */
+  --coral-ink: #B33F19;
   --amber: #F2A93B;
   --choc: #3B2418;
   --pink: #D65A7A;
   --coffee: #8B5A2B;
+  /* Nunca #fff puro: o card é tingido para o mesmo mundo do vídeo. */
+  --card: #FFFCF5;
   --font-display: 'Fredoka', sans-serif;
   --font-body: 'Inter', sans-serif;
 }
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+/* clip depois de hidden: hidden sozinho ainda deixa o JS rolar a página
+   de lado, e uma âncora consegue deixar tudo deslocado. */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
 
 body {
   margin: 0;
@@ -19,9 +30,72 @@ body {
   color: var(--choc);
   font-family: var(--font-body);
   overflow-x: hidden;
+  overflow-x: clip;
+}
+
+.skip-link {
+  /* fixed, não absolute: com absolute o link fica fora da tela quando a
+     página já está rolada, e o Tab foca algo invisível. */
+  position: fixed;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  background: var(--choc);
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 0 0 var(--radius, 10px) var(--radius, 10px);
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 0; }
+
+:focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.hero-content :focus-visible,
+.footer :focus-visible,
+.bottom-nav :focus-visible {
+  outline-color: var(--amber);
+}
+
+/* Alvo de toque confortável sem mudar o layout de quem usa mouse. */
+@media (pointer: coarse) {
+  .btn,
+  .topbar-nav a,
+  .footer-whatsapp {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 img, video { max-width: 100%; display: block; }
+
+/* Uma única camada de ambiente atrás de tudo, no mesmo tom quente do
+   vídeo, com deriva de 80s — rolar a página vira atravessar um lugar em
+   vez de passar por blocos empilhados. */
+.ambient {
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side, rgba(242,169,59,0.14), transparent 70%) 18% 22% / 55% 55% no-repeat,
+    radial-gradient(closest-side, rgba(214,90,122,0.11), transparent 70%) 82% 68% / 50% 50% no-repeat,
+    radial-gradient(closest-side, rgba(226,87,43,0.09), transparent 70%) 50% 92% / 45% 45% no-repeat;
+  animation: ambient-drift 80s ease-in-out infinite;
+  animation-delay: -24s;
+}
+@keyframes ambient-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(2.5%, -2%, 0) scale(1.08); }
+}
 
 /* preloader — segura a página até os 70 frames do hero carregarem de
    verdade (não é um timer fixo), depois some com blur + fade. */
@@ -325,7 +399,7 @@ body.is-loading { overflow: hidden; }
   font-weight: 500;
   font-size: 13px;
   letter-spacing: 0.5px;
-  color: var(--coral);
+  color: var(--coral-ink);
   margin: 0 0 10px;
 }
 .section-title {
@@ -433,7 +507,7 @@ body.is-loading { overflow: hidden; }
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 13px;
-  color: var(--coral);
+  color: var(--coral-ink);
   text-align: center;
   padding: 20px;
 }
@@ -457,7 +531,7 @@ body.is-loading { overflow: hidden; }
   gap: 20px;
 }
 .flavor-card {
-  background: #fff;
+  background: var(--card);
   border-radius: 20px;
   padding: 28px 22px;
   text-align: center;
@@ -521,26 +595,61 @@ body.is-loading { overflow: hidden; }
   max-width: 1080px;
   margin: 0 auto;
 }
-.how-grid {
+/* Layout deliberadamente diferente do cardápio: lá é grade centralizada,
+   aqui é assimétrico, com os passos empilhados num fio vertical. */
+.how-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 32px;
-  margin-top: 48px;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 64px;
+  align-items: start;
 }
-.how-step { text-align: left; }
+.how-aside { position: sticky; top: 96px; }
+.how-lead {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(59,36,24,0.7);
+  margin: 16px 0 0;
+  max-width: 30ch;
+}
+.how-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 34px;
+  position: relative;
+}
+/* O fio que costura os três passos. */
+.how-steps::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--amber), var(--coral) 55%, var(--pink));
+  opacity: 0.45;
+}
+.how-step {
+  position: relative;
+  text-align: left;
+  padding-bottom: 40px;
+}
+.how-step:last-child { padding-bottom: 0; }
 .how-num {
+  position: absolute;
+  left: -34px;
+  top: -2px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: var(--coral);
   color: var(--cream);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 16px;
-  margin-bottom: 16px;
+  font-size: 14px;
+  box-shadow: 0 0 0 6px var(--cream);
 }
 .how-step h3 {
   font-family: var(--font-display);
@@ -581,7 +690,7 @@ body.is-loading { overflow: hidden; }
 }
 .chat-in {
   align-self: flex-start;
-  background: #fff;
+  background: var(--card);
   color: var(--choc);
   border-bottom-left-radius: 4px;
 }
@@ -682,6 +791,8 @@ body.is-loading { overflow: hidden; }
   .about-grid { grid-template-columns: 1fr; }
   .stamp { justify-self: start; }
   .topbar { display: none; }
+  .how-layout { grid-template-columns: 1fr; gap: 36px; }
+  .how-aside { position: static; }
 
   .whatsapp-float { display: none; }
 
