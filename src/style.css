@@ -7,7 +7,8 @@
   --amber: #F2A93B;
   --choc: #3B2418;
   --pink: #D65A7A;
-  --coffee: #8B5A2B;
+  --coffee: #6F4423;
+  --hazel: #A9713C;
   /* Nunca #fff puro: o card é tingido para o mesmo mundo do vídeo. */
   --card: #FFFCF5;
   --font-display: 'Fredoka', sans-serif;
@@ -576,20 +577,22 @@ body.is-loading { overflow: hidden; }
   color: rgba(59,36,24,0.65);
   margin: 12px 0 48px;
 }
-/* 2x2: com 4 sabores, auto-fit deixava o quarto card orfao numa linha
-   sozinha, com um vazio enorme ao lado. */
+/* Com 5 sabores, uma grade de colunas fixas sempre deixa sobra na última
+   linha. Flex com wrap centraliza o resto (3 em cima, 2 embaixo), então
+   nenhum card fica encostado num vazio. */
 .menu-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
-  max-width: 760px;
+  max-width: 1000px;
   margin: 0 auto;
-}
-@media (max-width: 560px) {
-  .menu-grid { grid-template-columns: 1fr; }
 }
 .flavor-card {
   position: relative;
+  /* base de 288px: cabem 3 por linha até 1000px, 2 em tablet, 1 no
+     celular, sem precisar de breakpoint pra cada caso. */
+  flex: 0 1 288px;
   background: var(--card);
   border-radius: 20px;
   padding: 28px 22px;
@@ -613,6 +616,7 @@ body.is-loading { overflow: hidden; }
 .flavor-card.c-amber { border-color: var(--amber); }
 .flavor-card.c-pink { border-color: var(--pink); }
 .flavor-card.c-choc { border-color: var(--choc); }
+.flavor-card.c-hazel { border-color: var(--hazel); }
 .flavor-card.c-coffee { border-color: var(--coffee); }
 
 /* A assinatura da marca: a mordida. Um recorte de verdade (mask, nao um
@@ -636,6 +640,7 @@ body.is-loading { overflow: hidden; }
 .c-amber .flavor-icon { background: var(--amber); }
 .c-pink .flavor-icon { background: var(--pink); }
 .c-choc .flavor-icon { background: var(--choc); }
+.c-hazel .flavor-icon { background: var(--hazel); }
 .c-coffee .flavor-icon { background: var(--coffee); }
 
 /* Cada sabor tem o seu proprio desenho, nao a mesma forma recolorida. */
@@ -645,6 +650,7 @@ body.is-loading { overflow: hidden; }
 .fi-chip { fill: rgba(59,36,24,0.55); }
 .fi-swirl { stroke: rgba(59,36,24,0.42); }
 .fi-bean { fill: rgba(59,36,24,0.6); }
+.fi-crack { stroke: rgba(255,252,245,0.85); }
 
 .flavor-name {
   font-family: var(--font-display);
@@ -722,6 +728,14 @@ body.is-loading { overflow: hidden; }
   to { opacity: 1; transform: none; }
 }
 .basket-item-name { flex: 1; text-align: left; }
+.basket-item-sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(255,247,232,0.55);
+  white-space: nowrap;
+}
+/* O preço com desconto se destaca: é a recompensa de ter chegado aos 10. */
+.basket-item-sub.is-bulk { color: var(--amber); }
 .basket-qty {
   display: inline-flex;
   align-items: center;

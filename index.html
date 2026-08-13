@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Biscoitos da Julia — feitos por encomenda</title>
-  <meta name="description" content="Biscoitos artesanais feitos por encomenda: amanteigado, casadinho de goiabada, chocolate e Nutella com café. Receita de família." />
+  <meta name="description" content="Biscoitos artesanais feitos por encomenda: amanteigado, casadinho de goiabada, chocolate, Nutella e café. Receita de família." />
   <meta name="theme-color" content="#3B2418" />
   <link rel="canonical" href="https://pablorieger.github.io/Biscoitosartesanaisjulia/" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23F2A93B'/%3E%3Ccircle cx='11' cy='11.5' r='2.6' fill='%233B2418'/%3E%3Ccircle cx='21.5' cy='14' r='2.1' fill='%233B2418'/%3E%3Ccircle cx='14.5' cy='21.5' r='2.4' fill='%233B2418'/%3E%3Ccircle cx='22' cy='22' r='1.7' fill='%233B2418'/%3E%3C/svg%3E" />
@@ -12,7 +12,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Biscoitos da Julia" />
   <meta property="og:title" content="Biscoitos da Julia — feitos por encomenda" />
-  <meta property="og:description" content="Biscoitos artesanais de receita de família: amanteigado, casadinho de goiabada, chocolate e Nutella com café. Peça pelo WhatsApp." />
+  <meta property="og:description" content="Biscoitos artesanais de receita de família: amanteigado, casadinho de goiabada, chocolate, Nutella e café. Peça pelo WhatsApp." />
   <meta property="og:url" content="https://pablorieger.github.io/Biscoitosartesanaisjulia/" />
   <meta property="og:image" content="https://pablorieger.github.io/Biscoitosartesanaisjulia/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
@@ -47,7 +47,8 @@
           { "@type": "MenuItem", "name": "Amanteigado", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "BRL" } },
           { "@type": "MenuItem", "name": "Casadinho de goiabada", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "BRL" } },
           { "@type": "MenuItem", "name": "Chocolate", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "BRL" } },
-          { "@type": "MenuItem", "name": "Nutella e café", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "BRL" } }
+          { "@type": "MenuItem", "name": "Nutella", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "BRL" } },
+          { "@type": "MenuItem", "name": "Café", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "BRL" } }
         ]
       }
     }
@@ -130,7 +131,7 @@
     <section class="menu" id="cardapio">
       <p class="section-eyebrow center">Cardápio</p>
       <h2 class="section-title center">Escolha o seu sabor</h2>
-      <p class="menu-price-note reveal">R$ 15 o pacote &nbsp;·&nbsp; a partir de 15 unidades, R$ 12 cada</p>
+      <p class="menu-price-note reveal">R$ 15 o pacote &nbsp;·&nbsp; 10 ou mais do mesmo sabor, R$ 12 cada</p>
 
       <div class="menu-grid">
         <article class="flavor-card reveal c-amber" data-flavor="Amanteigado">
@@ -180,18 +181,31 @@
           <button class="btn btn-flavor" type="button" data-add="Chocolate">Adicionar</button>
         </article>
 
-        <article class="flavor-card reveal c-coffee" data-flavor="Nutella e café">
+        <article class="flavor-card reveal c-hazel" data-flavor="Nutella">
           <div class="flavor-icon">
             <svg viewBox="0 0 48 48" aria-hidden="true">
               <circle class="fi-body" cx="24" cy="24" r="18" />
-              <path class="fi-swirl" d="M14 27c4-6 9 2 13-3.5S34 15 34 15" stroke-width="3.2" stroke-linecap="round" fill="none" />
-              <ellipse class="fi-bean" cx="30" cy="31" rx="4.6" ry="3.2" transform="rotate(-24 30 31)" />
+              <path class="fi-swirl" d="M13 28c3.5-7 9.5 2.5 13.5-4S35 14.5 35 14.5" stroke-width="3.4" stroke-linecap="round" fill="none" />
             </svg>
           </div>
-          <h3 class="flavor-name">Nutella e café</h3>
-          <p class="flavor-desc">Nutella e um toque de café, pra quem gosta de sabor forte.</p>
+          <h3 class="flavor-name">Nutella</h3>
+          <p class="flavor-desc">Creme de avelã de verdade, generoso no recheio.</p>
           <p class="flavor-price"><span>R$</span>15<small>/pacote</small></p>
-          <button class="btn btn-flavor" type="button" data-add="Nutella e café">Adicionar</button>
+          <button class="btn btn-flavor" type="button" data-add="Nutella">Adicionar</button>
+        </article>
+
+        <article class="flavor-card reveal c-coffee" data-flavor="Café">
+          <div class="flavor-icon">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <circle class="fi-body" cx="24" cy="24" r="18" />
+              <ellipse class="fi-bean" cx="24" cy="24" rx="8.5" ry="12" transform="rotate(-28 24 24)" />
+              <path class="fi-crack" d="M24 13.5c-2.6 4-2.6 17 0 21" stroke-width="1.9" stroke-linecap="round" fill="none" />
+            </svg>
+          </div>
+          <h3 class="flavor-name">Café</h3>
+          <p class="flavor-desc">Café coado na massa, pra quem gosta de sabor forte.</p>
+          <p class="flavor-price"><span>R$</span>15<small>/pacote</small></p>
+          <button class="btn btn-flavor" type="button" data-add="Café">Adicionar</button>
         </article>
       </div>
 

@@ -1,10 +1,12 @@
 const WHATSAPP = "5567991105206";
 const PRICE_FULL = 15;
 const PRICE_BULK = 12;
-// A regra da casa: a partir de 15 unidades, cada pacote sai por 12.
-const BULK_FROM = 15;
+// A regra da casa: 10 ou mais DO MESMO SABOR saem a 12 cada. O desconto
+// e' por sabor, entao somar sabores diferentes nao alcanca a promocao.
+const BULK_FROM = 10;
 
 const money = (v) => "R$ " + v.toString().replace(".", ",");
+const unitFor = (qty) => (qty >= BULK_FROM ? PRICE_BULK : PRICE_FULL);
 
 export function initBasket() {
   const root = document.querySelector("[data-basket]");
@@ -18,19 +20,28 @@ export function initBasket() {
 
   function totals() {
     let count = 0;
-    items.forEach((qty) => (count += qty));
-    const unit = count >= BULK_FROM ? PRICE_BULK : PRICE_FULL;
-    return { count, unit, total: count * unit };
+    let total = 0;
+    let discounted = 0;
+    // Cada sabor tem o seu proprio preco unitario, decidido pela propria
+    // quantidade — por isso o total e' somado linha a linha.
+    items.forEach((qty) => {
+      count += qty;
+      total += qty * unitFor(qty);
+      if (qty >= BULK_FROM) discounted++;
+    });
+    return { count, total, discounted };
   }
 
-  function message({ count, unit, total }) {
+  function message({ count, total }) {
     const lines = [];
-    items.forEach((qty, name) => lines.push(`${qty}x ${name}`));
+    items.forEach((qty, name) => {
+      const unit = unitFor(qty);
+      lines.push(`${qty}x ${name} (${money(unit)} cada) = ${money(qty * unit)}`);
+    });
     return (
       "Oi Julia! Quero encomendar:\n" +
       lines.join("\n") +
-      `\n\nTotal: ${count} ${count === 1 ? "pacote" : "pacotes"}` +
-      ` x ${money(unit)} = ${money(total)}`
+      `\n\n${count} ${count === 1 ? "pacote" : "pacotes"} no total: ${money(total)}`
     );
   }
 
@@ -46,9 +57,17 @@ export function initBasket() {
       const li = document.createElement("li");
       li.className = "basket-item";
 
+      const unit = unitFor(qty);
       const label = document.createElement("span");
       label.className = "basket-item-name";
       label.textContent = name;
+
+      // O preço fica visível por linha porque ele muda por sabor: sem
+      // isso o total pareceria sair do nada.
+      const sub = document.createElement("span");
+      sub.className = "basket-item-sub" + (unit === PRICE_BULK ? " is-bulk" : "");
+      sub.textContent = `${money(unit)} cada`;
+      if (unit === PRICE_BULK) sub.title = `10 ou mais de ${name}`;
 
       const qtyBox = document.createElement("div");
       qtyBox.className = "basket-qty";
@@ -69,16 +88,28 @@ export function initBasket() {
       plus.addEventListener("click", () => change(name, 1));
 
       qtyBox.append(minus, count, plus);
-      li.append(label, qtyBox);
+      li.append(label, sub, qtyBox);
       list.append(li);
     });
 
     const t = totals();
     totalEl.textContent = money(t.total);
-    noteEl.textContent =
-      t.count >= BULK_FROM
-        ? `${t.count} pacotes, ${money(PRICE_BULK)} cada`
-        : `Faltam ${BULK_FROM - t.count} para pagar ${money(PRICE_BULK)} cada`;
+
+    // A dica aponta o sabor que está mais perto de fechar os 10, porque
+    // é ali que o visitante ganha alguma coisa somando mais um.
+    let closest = null;
+    items.forEach((qty, name) => {
+      if (qty >= BULK_FROM) return;
+      if (!closest || qty > closest.qty) closest = { name, qty };
+    });
+
+    if (closest) {
+      const missing = BULK_FROM - closest.qty;
+      noteEl.textContent = `Mais ${missing} de ${closest.name} e esse sai a ${money(PRICE_BULK)} cada`;
+    } else {
+      noteEl.textContent = `Desconto aplicado em ${t.discounted} ${t.discounted === 1 ? "sabor" : "sabores"}`;
+    }
+
     sendEl.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message(t))}`;
   }
 
