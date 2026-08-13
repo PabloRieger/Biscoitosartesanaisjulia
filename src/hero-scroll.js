@@ -110,6 +110,7 @@ export function initHeroScroll() {
   const ctx = canvas.getContext("2d");
   const images = new Array(FRAME_COUNT);
   let currentIndex = -1;
+  let currentPush = 1;
   const updateHeroReveal = setupHeroReveal();
 
   // Canvas minúsculo pro fundo ambiente: ampliá-lo já produz um desfoque
@@ -118,7 +119,12 @@ export function initHeroScroll() {
   const ambient = document.createElement("canvas");
   const ambientCtx = ambient.getContext("2d");
 
-  function drawIndex(index) {
+  // Push-in: a cena avança de 0.94 até 1.0 do enquadramento inteiro.
+  // Cresce ATÉ o contain e para ali — passar de 1 recomeçaria a cortar as
+  // bordas do biscoito, que é justamente o que o contain veio resolver.
+  const PUSH_FROM = 0.94;
+
+  function drawIndex(index, push = 1) {
     const img = images[index];
     if (!img || !img.complete || img.naturalWidth === 0) return;
     const cw = canvas.width;
@@ -127,6 +133,7 @@ export function initHeroScroll() {
     // desenhar aqui lança InvalidStateError e não pintaria nada de útil.
     if (!cw || !ch) return;
     currentIndex = index;
+    currentPush = push;
     const iw = img.naturalWidth;
     const ih = img.naturalHeight;
 
@@ -141,8 +148,9 @@ export function initHeroScroll() {
     ctx.fillStyle = "rgba(59,36,24,0.55)";
     ctx.fillRect(0, 0, cw, ch);
 
-    // Frente: a imagem inteira, sem cortar nada (contain, não cover).
-    const scale = Math.min(cw / iw, ch / ih);
+    // Frente: a imagem inteira, sem cortar nada (contain, não cover),
+    // multiplicada pelo push, que nunca passa de 1.
+    const scale = Math.min(cw / iw, ch / ih) * push;
     const dw = iw * scale;
     const dh = ih * scale;
     ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
@@ -156,7 +164,7 @@ export function initHeroScroll() {
     // Sempre recalcula o desenho no tamanho novo, mesmo sem frame novo —
     // senão a primeira chamada (antes do frame 0 carregar) nunca repete e
     // o canvas fica em branco pra sempre caso o tamanho não mude de novo.
-    if (currentIndex >= 0) drawIndex(currentIndex);
+    if (currentIndex >= 0) drawIndex(currentIndex, currentPush);
   }
 
   function nearestLoadedIndex(target) {
@@ -171,23 +179,58 @@ export function initHeroScroll() {
 
   // Progresso vem da altura toda do spacer (não do pin, que fica fixo na
   // tela) — igual ao ScrollTrigger "top top" -> "bottom bottom" da Gorie.
-  function onScroll() {
+  function heroProgress() {
     const rect = spacer.getBoundingClientRect();
     const total = rect.height - window.innerHeight;
-    const progress = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
-    const target = Math.round(progress * (FRAME_COUNT - 1));
-    drawIndex(nearestLoadedIndex(target));
-    updateHeroReveal(progress);
+    return total > 0 ? clamp01(-rect.top / total) : 0;
   }
 
-  let ticking = false;
-  function onScrollThrottled() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      onScroll();
-      ticking = false;
-    });
+  function paint(p) {
+    const index = Math.round(p * (FRAME_COUNT - 1));
+    drawIndex(nearestLoadedIndex(index), PUSH_FROM + (1 - PUSH_FROM) * p);
+    updateHeroReveal(p);
+  }
+
+  // Suavização: o progresso exibido persegue o do scroll em vez de saltar
+  // direto pra ele. É o que faz o vídeo fluir em vez de andar aos trancos.
+  let target = 0;
+  let shown = 0;
+  let rafId = null;
+  let lastTick = 0;
+  const SMOOTH = 0.19;
+
+  function tick(now) {
+    const dt = Math.min(100, now - (lastTick || now));
+    lastTick = now;
+    // O expoente normaliza a suavização para 60fps: sem ele, uma tela de
+    // 120Hz convergiria no dobro da velocidade e o site teria um "peso"
+    // diferente por máquina.
+    shown += (target - shown) * (1 - Math.pow(1 - SMOOTH, dt / 16.667));
+
+    if (Math.abs(target - shown) < 0.0004) {
+      shown = target;
+      rafId = null;
+      lastTick = 0; // alcançou: o laço descansa em vez de rodar à toa
+    } else {
+      rafId = requestAnimationFrame(tick);
+    }
+    paint(shown);
+  }
+
+  function onScroll() {
+    target = heroProgress();
+    if (rafId === null) {
+      lastTick = 0;
+      rafId = requestAnimationFrame(tick);
+    }
+  }
+
+  function stopLoop() {
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+      lastTick = 0;
+    }
   }
 
   function onResize() {
@@ -208,13 +251,15 @@ export function initHeroScroll() {
   function enableScrub() {
     if (scrubOn === true) return;
     scrubOn = true;
-    window.addEventListener("scroll", onScrollThrottled, { passive: true });
-    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    // Sem salto: parte de onde a tela já está, em vez de animar do zero.
+    target = shown = heroProgress();
+    paint(shown);
   }
 
   // Estado final e legível, sem meia animação congelada.
   function paintRestState() {
-    drawIndex(nearestLoadedIndex(FRAME_COUNT - 1));
+    drawIndex(nearestLoadedIndex(FRAME_COUNT - 1), 1);
     updateHeroReveal(0.8);
   }
 
@@ -222,14 +267,18 @@ export function initHeroScroll() {
   // sobrescreveria o estado pousado de quem pediu menos movimento.
   function paintCurrent() {
     if (reduceQuery.matches) paintRestState();
-    else onScroll();
+    else {
+      target = shown = heroProgress();
+      paint(shown);
+    }
   }
 
   function disableScrub() {
     if (scrubOn === false) return;
     const wasOn = scrubOn === true;
     scrubOn = false;
-    if (wasOn) window.removeEventListener("scroll", onScrollThrottled);
+    if (wasOn) window.removeEventListener("scroll", onScroll);
+    stopLoop();
     paintRestState();
   }
 

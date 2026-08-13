@@ -446,16 +446,36 @@ body.is-loading { overflow: hidden; }
 /* transição hero → sobre: onda em creme sobre uma tira chocolate, pra não
    cortar seco do vídeo escuro pra seção clara. */
 .hero-about-transition {
+  position: relative;
   background: var(--choc);
   line-height: 0;
+  height: 104px;
+  overflow: hidden;
 }
-.hero-about-transition svg {
+.wave {
+  position: absolute;
+  left: -2%;
+  /* A base afunda além do container (que corta): sem essa folga, o
+     deslocamento do paralaxe levanta a onda e revela o chocolate embaixo. */
+  bottom: -40px;
+  width: 104%;
+  height: 144px;
   display: block;
-  width: 100%;
-  height: 70px;
+  /* --p vem do JS: -1 quando a faixa entra por baixo, 0 quando ela sai
+     por cima. As duas camadas usam o mesmo valor com forças diferentes. */
+  will-change: transform;
 }
-.hero-about-transition path {
-  fill: var(--cream);
+.wave-back {
+  transform: translateY(calc(var(--p, 0) * 26px));
+}
+.wave-back path { fill: #F3E4CE; }
+.wave-front {
+  transform: translateY(calc(var(--p, 0) * 8px));
+}
+.wave-front path { fill: var(--cream); }
+
+@media (prefers-reduced-motion: reduce) {
+  .wave { transform: none !important; }
 }
 
 /* about */

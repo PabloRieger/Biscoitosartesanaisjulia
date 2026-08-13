@@ -4,6 +4,7 @@ import { initChatDemo } from "./chat-demo.js";
 import { initRipple } from "./ripple.js";
 import { initBottomNav } from "./bottom-nav.js";
 import { initBasket } from "./basket.js";
+import { initWave } from "./wave.js";
 
 const hero = initHeroScroll();
 runPreloader(hero);
@@ -11,6 +12,7 @@ initChatDemo();
 initRipple();
 initBottomNav();
 initBasket();
+initWave();
 
 const STAGGER_MS = 90;
 
