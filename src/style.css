@@ -338,6 +338,21 @@ body.is-loading { overflow: hidden; }
 }
 .center { text-align: center; }
 
+/* transição hero → sobre: onda em creme sobre uma tira chocolate, pra não
+   cortar seco do vídeo escuro pra seção clara. */
+.hero-about-transition {
+  background: var(--choc);
+  line-height: 0;
+}
+.hero-about-transition svg {
+  display: block;
+  width: 100%;
+  height: 70px;
+}
+.hero-about-transition path {
+  fill: var(--cream);
+}
+
 /* about */
 .about {
   position: relative;
