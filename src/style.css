@@ -12,6 +12,17 @@
   --card: #FFFCF5;
   --font-display: 'Fredoka', sans-serif;
   --font-body: 'Inter', sans-serif;
+  /* A terceira voz do trio: numeros, precos e rotulos pequenos. */
+  --font-mono: 'DM Mono', ui-monospace, monospace;
+  /* Dois tokens de easing, usados em tudo. Nada snapa. */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Texto sobre vídeo ao vivo: o fundo muda a cada frame, então a sombra
+     tem três camadas — borda curta, brilho médio, queda larga. */
+  --tshadow:
+    0 1px 2px rgba(28,16,10,0.95),
+    0 3px 12px rgba(28,16,10,0.7),
+    0 10px 40px rgba(28,16,10,0.75);
 }
 
 * { box-sizing: border-box; }
@@ -97,6 +108,17 @@ img, video { max-width: 100%; display: block; }
   50% { transform: translate3d(2.5%, -2%, 0) scale(1.08); }
 }
 
+/* Grão fino sobre tudo: tira o aspecto de superfície digital lisa e
+   aproxima a página da textura do próprio biscoito. */
+.ambient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
 /* preloader — segura a página até os 70 frames do hero carregarem de
    verdade (não é um timer fixo), depois some com blur + fade. */
 .preloader {
@@ -174,11 +196,13 @@ body.is-loading { overflow: hidden; }
   font-weight: 600;
   font-size: 15px;
   text-decoration: none;
+  border: 0;
+  cursor: pointer;
   border-radius: 100px;
   padding: 14px 26px;
   overflow: hidden;
   isolation: isolate;
-  transition: transform 0.15s ease, color 0.35s ease 0.05s;
+  transition: transform 0.15s var(--ease-out), color 0.35s var(--ease-out) 0.05s;
 }
 .btn::before {
   content: "";
@@ -316,10 +340,14 @@ body.is-loading { overflow: hidden; }
   height: 100%;
   display: block;
 }
+/* Escurecimento radial: escurece atrás do texto e deixa os cantos vivos,
+   em vez de achatar o quadro inteiro como o gradiente linear fazia. */
 .hero-scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(59,36,24,0.35) 0%, rgba(59,36,24,0.55) 100%);
+  background:
+    radial-gradient(ellipse 78% 62% at 50% 50%, rgba(24,13,8,0.66) 0%, rgba(24,13,8,0.42) 46%, rgba(24,13,8,0) 78%),
+    linear-gradient(180deg, rgba(45,27,17,0.34) 0%, rgba(45,27,17,0.5) 100%);
 }
 .hero-content {
   position: relative;
@@ -328,7 +356,10 @@ body.is-loading { overflow: hidden; }
   padding: 0 24px;
   color: var(--cream);
   transform: translateY(16px);
+  text-shadow: var(--tshadow);
 }
+/* Botão com sombra de texto lê como sujeira: o fundo sólido já resolve. */
+.hero-content .btn { text-shadow: none; }
 .hero-cta {
   opacity: 0;
   transform: translateY(16px) scale(0.85);
@@ -525,55 +556,75 @@ body.is-loading { overflow: hidden; }
   color: rgba(59,36,24,0.65);
   margin: 12px 0 48px;
 }
+/* 2x2: com 4 sabores, auto-fit deixava o quarto card orfao numa linha
+   sozinha, com um vazio enorme ao lado. */
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+@media (max-width: 560px) {
+  .menu-grid { grid-template-columns: 1fr; }
 }
 .flavor-card {
+  position: relative;
   background: var(--card);
   border-radius: 20px;
   padding: 28px 22px;
   text-align: center;
   border-bottom: 5px solid;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.24s var(--ease-out), box-shadow 0.24s var(--ease-out);
+  /* Sombra em tres camadas: contato curto, corpo medio, difusa larga.
+     Uma camada so' e' o que faz um card parecer template. */
+  box-shadow:
+    0 1px 2px rgba(59,36,24,0.05),
+    0 4px 10px rgba(59,36,24,0.05),
+    0 14px 34px rgba(59,36,24,0.05);
 }
 .flavor-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 32px rgba(59,36,24,0.12);
+  box-shadow:
+    0 2px 4px rgba(59,36,24,0.07),
+    0 10px 22px rgba(59,36,24,0.09),
+    0 26px 56px rgba(59,36,24,0.11);
 }
 .flavor-card.c-amber { border-color: var(--amber); }
 .flavor-card.c-pink { border-color: var(--pink); }
 .flavor-card.c-choc { border-color: var(--choc); }
 .flavor-card.c-coffee { border-color: var(--coffee); }
 
+/* A assinatura da marca: a mordida. Um recorte de verdade (mask, nao um
+   circulo pintado por cima) no canto do bloco de cor de cada sabor. */
 .flavor-icon {
-  width: 64px;
-  height: 64px;
+  width: 68px;
+  height: 68px;
   margin: 0 auto 18px;
-  border-radius: 16px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   transform: rotate(-6deg);
+  transition: transform 0.3s var(--ease-overshoot);
+  -webkit-mask-image: radial-gradient(circle 15px at 100% 0, transparent 97%, #000 100%);
+  mask-image: radial-gradient(circle 15px at 100% 0, transparent 97%, #000 100%);
 }
+.flavor-card:hover .flavor-icon { transform: rotate(4deg) scale(1.06); }
+.flavor-icon svg { width: 44px; height: 44px; }
+
 .c-amber .flavor-icon { background: var(--amber); }
 .c-pink .flavor-icon { background: var(--pink); }
 .c-choc .flavor-icon { background: var(--choc); }
 .c-coffee .flavor-icon { background: var(--coffee); }
 
-.cookie-shape {
-  display: block;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.9);
-  box-shadow:
-    -7px -3px 0 -6px rgba(59,36,24,0.5),
-    5px 6px 0 -6px rgba(59,36,24,0.5),
-    -3px 8px 0 -6px rgba(59,36,24,0.5),
-    7px -6px 0 -6px rgba(59,36,24,0.5);
-}
+/* Cada sabor tem o seu proprio desenho, nao a mesma forma recolorida. */
+.fi-body { fill: rgba(255,252,245,0.94); }
+.fi-mark { stroke: rgba(59,36,24,0.45); fill: none; }
+.fi-fill { fill: var(--pink); }
+.fi-chip { fill: rgba(59,36,24,0.55); }
+.fi-swirl { stroke: rgba(59,36,24,0.42); }
+.fi-bean { fill: rgba(59,36,24,0.6); }
 
 .flavor-name {
   font-family: var(--font-display);
@@ -585,8 +636,123 @@ body.is-loading { overflow: hidden; }
   font-size: 13px;
   line-height: 1.5;
   color: rgba(59,36,24,0.7);
-  margin: 0 0 18px;
+  margin: 0 0 14px;
   min-height: 40px;
+}
+.flavor-price {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--choc);
+  margin: 0 0 16px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 3px;
+}
+.flavor-price span { font-size: 13px; opacity: 0.6; }
+.flavor-price small {
+  font-family: var(--font-body);
+  font-size: 12px;
+  opacity: 0.55;
+  margin-left: 2px;
+}
+
+/* A cesta: o momento interativo do site. Aparece so' quando o visitante
+   escolhe algo, e monta a mensagem do WhatsApp pronta. */
+.basket {
+  max-width: 760px;
+  margin: 28px auto 0;
+}
+.basket[hidden] { display: none; }
+.basket-inner {
+  background: var(--choc);
+  color: var(--cream);
+  border-radius: 20px;
+  padding: 22px 24px;
+  box-shadow:
+    0 2px 6px rgba(59,36,24,0.12),
+    0 16px 40px rgba(59,36,24,0.18);
+}
+.basket-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin: 0 0 12px;
+}
+.basket-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.basket-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  animation: basket-in 0.32s var(--ease-overshoot) both;
+}
+@keyframes basket-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+.basket-item-name { flex: 1; text-align: left; }
+.basket-qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255,247,232,0.1);
+  border-radius: 100px;
+  padding: 2px;
+}
+.basket-qty button {
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--cream);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.18s var(--ease-out);
+}
+.basket-qty button:hover { background: rgba(255,247,232,0.18); }
+.basket-qty span {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  min-width: 22px;
+  text-align: center;
+}
+.basket-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,247,232,0.14);
+  padding-top: 16px;
+}
+.basket-total { display: flex; flex-direction: column; gap: 2px; }
+.basket-total strong {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 500;
+}
+.basket-total-label {
+  font-size: 12px;
+  color: var(--amber);
+  min-height: 16px;
+}
+
+@media (max-width: 560px) {
+  .basket-foot { flex-direction: column; align-items: stretch; }
+  .basket-foot .btn { justify-content: center; }
 }
 
 /* how it works */
@@ -617,7 +783,8 @@ body.is-loading { overflow: hidden; }
   padding: 0 0 0 34px;
   position: relative;
 }
-/* O fio que costura os três passos. */
+/* O fio que costura os três passos: desenha a si mesmo quando a seção
+   entra, de cima para baixo, como quem risca a lista. */
 .how-steps::before {
   content: "";
   position: absolute;
@@ -627,7 +794,11 @@ body.is-loading { overflow: hidden; }
   width: 2px;
   background: linear-gradient(180deg, var(--amber), var(--coral) 55%, var(--pink));
   opacity: 0.45;
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 1.1s var(--ease-out) 0.15s;
 }
+.how-steps.is-drawn::before { transform: scaleY(1); }
 .how-step {
   position: relative;
   text-align: left;
@@ -764,15 +935,28 @@ body.is-loading { overflow: hidden; }
   50% { transform: scale(1.08); }
 }
 
-/* scroll reveal */
+/* scroll reveal — cada seção tem a sua própria entrada, senão a página
+   inteira usa o mesmo fade e nada parece dirigido. */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
 }
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+}
+
+/* Cardápio: os cards sobem com um leve overshoot, como algo servido. */
+.flavor-card.reveal {
+  transform: translateY(30px) scale(0.94);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-overshoot);
+}
+
+/* Como funciona: os passos deslizam do fio, em leitura. */
+.how-step.reveal {
+  transform: translateX(-22px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
 }
 
 @media (prefers-reduced-motion: reduce) {
