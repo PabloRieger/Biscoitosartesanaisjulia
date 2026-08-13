@@ -30,12 +30,21 @@ function wrapWords(el) {
   return spans;
 }
 
-// Escritos do hero (eyebrow, título, subtítulo) vão surgindo em sequência
-// conforme a página desce, cada um numa janela do progresso do pin.
+function easeOutCubic(t) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+// Escritos do hero (eyebrow, título, subtítulo, botão) vão surgindo em
+// sequência espalhada por TODO o progresso do pin — o botão só chega no
+// fim, como recompensa da rolagem — mais um drift contínuo no bloco
+// inteiro pra sempre ter algo se movendo, mesmo entre uma revelação e
+// outra.
 function setupHeroReveal() {
+  const content = document.querySelector(".hero-content");
   const eyebrow = document.querySelector(".hero-eyebrow");
   const title = document.querySelector(".hero-title");
   const sub = document.querySelector(".hero-sub");
+  const cta = document.querySelector(".hero-cta");
   const underlinePath = document.querySelector(".uline-svg path");
 
   const eyebrowWords = wrapWords(eyebrow);
@@ -45,7 +54,7 @@ function setupHeroReveal() {
 
   function applyWords(spans, progress, start, end) {
     if (!spans.length) return;
-    const local = clamp01((progress - start) / (end - start));
+    const local = easeOutCubic(clamp01((progress - start) / (end - start)));
     const total = spans.length;
     spans.forEach((span, i) => {
       const s = i / total;
@@ -56,9 +65,13 @@ function setupHeroReveal() {
   }
 
   return (progress) => {
-    applyWords(eyebrowWords, progress, 0, 0.12);
+    if (content) {
+      content.style.transform = `translateY(${16 - progress * 32}px)`;
+    }
 
-    const titleLocal = clamp01((progress - 0.08) / (0.28 - 0.08));
+    applyWords(eyebrowWords, progress, 0, 0.15);
+
+    const titleLocal = easeOutCubic(clamp01((progress - 0.12) / (0.38 - 0.12)));
     if (title) {
       title.style.opacity = 0.45 + titleLocal * 0.55;
       title.style.transform = `translateY(${(1 - titleLocal) * 10}px)`;
@@ -67,7 +80,17 @@ function setupHeroReveal() {
       underlinePath.style.strokeDashoffset = `${UNDERLINE_DASH * (1 - titleLocal)}`;
     }
 
-    applyWords(subWords, progress, 0.28, 0.55);
+    applyWords(subWords, progress, 0.35, 0.62);
+
+    const ctaLocal = easeOutCubic(clamp01((progress - 0.78) / (0.97 - 0.78)));
+    if (cta) {
+      cta.style.opacity = `${ctaLocal}`;
+      // Só força o transform enquanto está entrando — assim que chega em
+      // 1, limpa o inline pra devolver o controle ao :hover/:active do CSS
+      // (senão o estilo inline travaria o lift do hover pra sempre).
+      cta.style.transform = ctaLocal >= 1 ? "" : `translateY(${(1 - ctaLocal) * 16}px) scale(${0.85 + ctaLocal * 0.15})`;
+      cta.style.pointerEvents = ctaLocal > 0.5 ? "auto" : "none";
+    }
   };
 }
 
