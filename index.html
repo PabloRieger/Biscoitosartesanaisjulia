@@ -23,7 +23,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <script type="application/ld+json">
   {
@@ -52,8 +52,8 @@
     }
   }
   </script>
-  <script type="module" crossorigin src="./assets/index-Y1dB9mdL.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-ugmXeP5Z.css">
+  <script type="module" crossorigin src="./assets/index-CPEAJ6nR.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DudGTZM5.css">
 </head>
 <body>
 
@@ -129,33 +129,85 @@
       <p class="menu-price-note reveal">R$ 15 o pacote &nbsp;·&nbsp; a partir de 15 unidades, R$ 12 cada</p>
 
       <div class="menu-grid">
-        <article class="flavor-card reveal c-amber">
-          <div class="flavor-icon"><i class="cookie-shape"></i></div>
+        <article class="flavor-card reveal c-amber" data-flavor="Amanteigado">
+          <div class="flavor-icon">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <circle class="fi-body" cx="24" cy="24" r="18" />
+              <g class="fi-mark" stroke-linecap="round" stroke-width="2.4">
+                <path d="M15 16.5v15M20 15v18M28 15v18M33 16.5v15" />
+              </g>
+            </svg>
+          </div>
           <h3 class="flavor-name">Amanteigado</h3>
           <p class="flavor-desc">Simples assim: manteiga, açúcar e uma receita que não muda.</p>
-          <a class="btn btn-flavor" href="https://wa.me/5567991105206?text=Oi%20Julia!%20Quero%20encomendar%20biscoitos%20amanteigado." target="_blank" rel="noopener">Pedir</a>
+          <p class="flavor-price"><span>R$</span>15<small>/pacote</small></p>
+          <button class="btn btn-flavor" type="button" data-add="Amanteigado">Adicionar</button>
         </article>
 
-        <article class="flavor-card reveal c-pink">
-          <div class="flavor-icon"><i class="cookie-shape"></i></div>
+        <article class="flavor-card reveal c-pink" data-flavor="Casadinho de goiabada">
+          <div class="flavor-icon">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <circle class="fi-body" cx="24" cy="16" r="14" />
+              <circle class="fi-body" cx="24" cy="32" r="14" />
+              <path class="fi-fill" d="M11 24h26a13 13 0 0 1-2 3.4c-3 1.2-6.5-1.6-9.6-.4-3 1.2-6.4 1-9.4-.2A13 13 0 0 1 11 24z" />
+            </svg>
+          </div>
           <h3 class="flavor-name">Casadinho de goiabada</h3>
           <p class="flavor-desc">Dois biscoitos abraçando um recheio generoso de goiabada.</p>
-          <a class="btn btn-flavor" href="https://wa.me/5567991105206?text=Oi%20Julia!%20Quero%20encomendar%20biscoitos%20casadinho%20de%20goiabada." target="_blank" rel="noopener">Pedir</a>
+          <p class="flavor-price"><span>R$</span>15<small>/pacote</small></p>
+          <button class="btn btn-flavor" type="button" data-add="Casadinho de goiabada">Adicionar</button>
         </article>
 
-        <article class="flavor-card reveal c-choc">
-          <div class="flavor-icon"><i class="cookie-shape"></i></div>
+        <article class="flavor-card reveal c-choc" data-flavor="Chocolate">
+          <div class="flavor-icon">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <circle class="fi-body" cx="24" cy="24" r="18" />
+              <g class="fi-chip">
+                <circle cx="17" cy="18" r="3.4" />
+                <circle cx="30" cy="20" r="2.7" />
+                <circle cx="21" cy="30" r="3" />
+                <circle cx="31" cy="30" r="2.2" />
+              </g>
+            </svg>
+          </div>
           <h3 class="flavor-name">Chocolate</h3>
           <p class="flavor-desc">Gotas de chocolate em cada mordida, sem economizar.</p>
-          <a class="btn btn-flavor" href="https://wa.me/5567991105206?text=Oi%20Julia!%20Quero%20encomendar%20biscoitos%20de%20chocolate." target="_blank" rel="noopener">Pedir</a>
+          <p class="flavor-price"><span>R$</span>15<small>/pacote</small></p>
+          <button class="btn btn-flavor" type="button" data-add="Chocolate">Adicionar</button>
         </article>
 
-        <article class="flavor-card reveal c-coffee">
-          <div class="flavor-icon"><i class="cookie-shape"></i></div>
+        <article class="flavor-card reveal c-coffee" data-flavor="Nutella e café">
+          <div class="flavor-icon">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <circle class="fi-body" cx="24" cy="24" r="18" />
+              <path class="fi-swirl" d="M14 27c4-6 9 2 13-3.5S34 15 34 15" stroke-width="3.2" stroke-linecap="round" fill="none" />
+              <ellipse class="fi-bean" cx="30" cy="31" rx="4.6" ry="3.2" transform="rotate(-24 30 31)" />
+            </svg>
+          </div>
           <h3 class="flavor-name">Nutella e café</h3>
           <p class="flavor-desc">Nutella e um toque de café, pra quem gosta de sabor forte.</p>
-          <a class="btn btn-flavor" href="https://wa.me/5567991105206?text=Oi%20Julia!%20Quero%20encomendar%20biscoitos%20de%20nutella%20e%20caf%C3%A9." target="_blank" rel="noopener">Pedir</a>
+          <p class="flavor-price"><span>R$</span>15<small>/pacote</small></p>
+          <button class="btn btn-flavor" type="button" data-add="Nutella e café">Adicionar</button>
         </article>
+      </div>
+
+      <!-- O momento interativo do site: o visitante monta o pedido e a
+           mensagem do WhatsApp sai pronta, com a regra dos 15+ aplicada. -->
+      <div class="basket" data-basket hidden>
+        <div class="basket-inner">
+          <p class="basket-label">Seu pedido</p>
+          <ul class="basket-list" data-basket-list></ul>
+          <div class="basket-foot">
+            <div class="basket-total">
+              <span class="basket-total-label" data-basket-note></span>
+              <strong data-basket-total>R$ 0</strong>
+            </div>
+            <a class="btn btn-primary" data-basket-send href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5C11.5 9.3 11 8 10.8 7.6c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 2 3 4.7 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.2-1.3-.1-.1-.3-.2-.5-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5C8.3 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.1 1 1-3-.2-.3C3.6 15 3 13.5 3 12c0-5 4-9 9-9s9 4 9 9-4 9-9 9z"/></svg>
+              Enviar pedido
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
