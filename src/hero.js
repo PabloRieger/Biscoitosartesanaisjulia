@@ -5,6 +5,10 @@
 
 const FRAME_COUNT = 96;
 
+// Os primeiros quadros são poeira densa sem foco: feios como primeira
+// imagem do site. O percurso começa onde a cascata já está formada.
+const FRAME_START = 16;
+
 // Os quadros têm nome fixo (frame-0001.webp...), então trocar o vídeo sem
 // trocar a URL faz o navegador de quem já visitou servir os quadros
 // ANTIGOS do cache. Suba este número sempre que a sequência mudar.
@@ -135,17 +139,34 @@ export function initHero() {
     return total > 0 ? clamp01(-rect.top / total) : 0;
   }
 
-  // Coreografia: cada bloco entra na sua janela, todos saem juntos no fim,
-  // bem quando a onda de transição assume.
+  // Coreografia: o hero ABRE montado, com uma entrada por tempo no
+  // carregamento, e só depois o scroll assume. Sem isso a primeira coisa
+  // que a pessoa vê é texto apagado esperando um gesto que ela ainda não
+  // fez, e a primeira impressão morre ali.
   const EXIT_FROM = 0.86;
+  const INTRO_MS = 2200;
 
-  function applyWords(words, p, from, to) {
+  let introStart = null;
+  let intro = 0;
+
+  function runIntro(now) {
+    if (introStart === null) introStart = now;
+    intro = clamp01((now - introStart) / INTRO_MS);
+    choreograph(shown);
+    if (intro < 1) requestAnimationFrame(runIntro);
+  }
+
+  // A entrada por tempo e a por scroll disputam, e a maior vence: assim o
+  // texto nunca "desmonta" ao voltar para o topo.
+  const gate = (scrollK, from, to) =>
+    Math.max(scrollK, easeOut(clamp01((intro - from) / (to - from))));
+
+  function applyWords(words, k) {
     if (!words.length) return;
-    const local = easeOut(clamp01((p - from) / (to - from)));
     words.forEach((w, i) => {
       const a = i / words.length;
       const b = (i + 1) / words.length;
-      w.style.opacity = `${0.25 + clamp01((local - a) / (b - a)) * 0.75}`;
+      w.style.opacity = `${0.25 + clamp01((k - a) / (b - a)) * 0.75}`;
     });
   }
 
@@ -158,17 +179,17 @@ export function initHero() {
       content.style.opacity = `${1 - exit}`;
     }
 
-    applyWords(labelWords, p, 0, 0.14);
+    applyWords(labelWords, gate(easeOut(clamp01(p / 0.14)), 0.05, 0.35));
 
-    const tp = easeOut(clamp01((p - 0.1) / 0.24));
+    const tp = gate(easeOut(clamp01((p - 0.1) / 0.24)), 0.15, 0.6);
     if (title) {
-      title.style.opacity = `${0.4 + tp * 0.6}`;
-      title.style.transform = `translateY(${(1 - tp) * 12}px)`;
+      title.style.opacity = `${0.15 + tp * 0.85}`;
+      title.style.transform = `translateY(${(1 - tp) * 14}px)`;
     }
 
-    applyWords(subWords, p, 0.3, 0.54);
+    applyWords(subWords, gate(easeOut(clamp01((p - 0.3) / 0.24)), 0.45, 0.8));
 
-    const cp = easeOut(clamp01((p - 0.56) / 0.2));
+    const cp = gate(easeOut(clamp01((p - 0.56) / 0.2)), 0.7, 1);
     if (cta) {
       cta.style.opacity = `${cp}`;
       // Solta o transform ao chegar: preso, ele travaria o hover do CSS.
@@ -176,11 +197,12 @@ export function initHero() {
       cta.style.pointerEvents = cp > 0.5 && exit < 0.5 ? "auto" : "none";
     }
 
-    if (hint) hint.style.opacity = `${clamp01(1 - p * 12)}`;
+    if (hint) hint.style.opacity = `${clamp01(1 - p * 12) * intro}`;
   }
 
   function paint(p) {
-    drawFrame(nearestLoaded(Math.round(p * (FRAME_COUNT - 1))), PUSH_FROM + (1 - PUSH_FROM) * p);
+    const index = FRAME_START + Math.round(p * (FRAME_COUNT - 1 - FRAME_START));
+    drawFrame(nearestLoaded(index), PUSH_FROM + (1 - PUSH_FROM) * p);
     choreograph(p);
   }
 
@@ -218,8 +240,10 @@ export function initHero() {
   }
 
   function settle() {
+    // Quem pediu menos movimento recebe o hero já montado e legível.
+    intro = 1;
     drawFrame(nearestLoaded(FRAME_COUNT - 1), 1);
-    choreograph(0.8);
+    choreograph(0.4);
   }
 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -288,9 +312,13 @@ export function initHero() {
     return new Promise((resolve) => {
       const done = () => {
         loaded++;
-        if (i === 0) {
+        // A entrada começa quando o primeiro quadro do percurso está
+        // pronto: o texto surgindo sobre um canvas vazio seria pior que
+        // não animar nada.
+        if (i === FRAME_START) {
           resize();
           repaint();
+          if (!reduce.matches && introStart === null) requestAnimationFrame(runIntro);
         }
         resolve();
       };
