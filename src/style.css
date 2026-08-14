@@ -533,9 +533,26 @@ body.is-loading { overflow: hidden; }
   max-width: 1080px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 48px;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
   align-items: center;
+}
+
+/* A foto da bancada com o selo carimbado por cima do canto. */
+.about-figure {
+  position: relative;
+  margin: 0;
+}
+.about-figure img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow:
+    0 2px 4px rgba(59,36,24,0.06),
+    0 10px 24px rgba(59,36,24,0.09),
+    0 28px 60px rgba(59,36,24,0.1);
 }
 .about-p {
   font-size: 16px;
@@ -545,11 +562,17 @@ body.is-loading { overflow: hidden; }
   max-width: 46ch;
 }
 .stamp {
-  justify-self: center;
-  width: 190px;
-  height: 190px;
+  position: absolute;
+  right: -18px;
+  bottom: -22px;
+  width: 158px;
+  height: 158px;
   border-radius: 50%;
   border: 3px dashed var(--coral);
+  /* O selo pousa metade sobre a foto, metade sobre o creme: por isso o
+     fundo próprio, senão o tracejado sumiria na madeira. */
+  background: rgba(255,247,232,0.94);
+  backdrop-filter: blur(3px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -558,10 +581,10 @@ body.is-loading { overflow: hidden; }
   transform: rotate(-8deg);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--coral-ink);
   text-align: center;
-  padding: 20px;
+  padding: 18px;
 }
 .stamp-dot { color: var(--amber); font-size: 18px; }
 
@@ -1007,7 +1030,9 @@ body.is-loading { overflow: hidden; }
 
 @media (max-width: 760px) {
   .about-grid { grid-template-columns: 1fr; }
-  .stamp { justify-self: start; }
+  /* No celular o selo encolhe e recolhe para dentro da foto, senão
+     encostaria na borda da tela. */
+  .stamp { width: 128px; height: 128px; font-size: 11px; right: 6px; bottom: -14px; }
   .topbar { display: none; }
   .how-layout { grid-template-columns: 1fr; gap: 36px; }
   .how-aside { position: static; }

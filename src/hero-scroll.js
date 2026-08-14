@@ -1,8 +1,13 @@
-const FRAME_COUNT = 70;
+const FRAME_COUNT = 96;
 const UNDERLINE_DASH = 260;
 
+// Os quadros têm nome fixo (frame-0001.webp...), então trocar o vídeo sem
+// trocar a URL faz o navegador de quem já visitou servir os quadros
+// ANTIGOS do cache. Suba este número sempre que a sequência mudar.
+const FRAMES_VERSION = 2;
+
 function framePath(index) {
-  return `frames/frame-${String(index + 1).padStart(4, "0")}.webp`;
+  return `frames/frame-${String(index + 1).padStart(4, "0")}.webp?v=${FRAMES_VERSION}`;
 }
 
 function clamp01(v) {
@@ -119,10 +124,15 @@ export function initHeroScroll() {
   const ambient = document.createElement("canvas");
   const ambientCtx = ambient.getContext("2d");
 
-  // Push-in: a cena avança de 0.94 até 1.0 do enquadramento inteiro.
-  // Cresce ATÉ o contain e para ali — passar de 1 recomeçaria a cortar as
-  // bordas do biscoito, que é justamente o que o contain veio resolver.
+  // Push-in: a cena avança de 0.94 até 1.0 do enquadramento de repouso.
   const PUSH_FROM = 0.94;
+  // O vídeo é 16:9 e a tela costuma ser mais alta, então "cabe inteiro"
+  // puro deixaria uma faixa fina no meio e borrão no resto. Amplia até
+  // preencher, com um teto de quanto do quadro pode sumir. O teto é mais
+  // frouxo em retrato porque lá a diferença de proporção é enorme, e o
+  // assunto vive no centro: some a borda da bancada, não os biscoitos.
+  const MIN_VISIBLE_LANDSCAPE = 0.8;
+  const MIN_VISIBLE_PORTRAIT = 0.52;
 
   function drawIndex(index, push = 1) {
     const img = images[index];
@@ -148,9 +158,12 @@ export function initHeroScroll() {
     ctx.fillStyle = "rgba(59,36,24,0.55)";
     ctx.fillRect(0, 0, cw, ch);
 
-    // Frente: a imagem inteira, sem cortar nada (contain, não cover),
-    // multiplicada pelo push, que nunca passa de 1.
-    const scale = Math.min(cw / iw, ch / ih) * push;
+    // Frente: cresce até preencher, com o teto de visibilidade acima, e
+    // o push por cima. O fundo ambiente cobre o que ainda sobrar.
+    const contain = Math.min(cw / iw, ch / ih);
+    const cover = Math.max(cw / iw, ch / ih);
+    const minVisible = ch > cw ? MIN_VISIBLE_PORTRAIT : MIN_VISIBLE_LANDSCAPE;
+    const scale = Math.min(cover, contain / minVisible) * push;
     const dw = iw * scale;
     const dh = ih * scale;
     ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
@@ -239,6 +252,15 @@ export function initHeroScroll() {
   }
 
   window.addEventListener("resize", onResize);
+
+  // Uma aba aberta em segundo plano mede o canvas como 0x0, e o evento de
+  // resize da janela não dispara quando ela finalmente aparece: sem isto o
+  // hero ficaria preto para sempre nesse caso.
+  if (typeof ResizeObserver !== "undefined") {
+    new ResizeObserver(() => {
+      if (canvas.getBoundingClientRect().width > 0) onResize();
+    }).observe(canvas);
+  }
 
   // O scrub é armado e desarmado ao vivo: se a pessoa liga "reduzir
   // movimento" com a página aberta, o hero pousa no estado final em vez
