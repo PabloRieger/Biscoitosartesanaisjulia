@@ -91,6 +91,37 @@ body {
 
 img, svg, video, canvas { display: block; max-width: 100%; }
 
+/* Ambiente: um brilho quente que deriva em 90s, mais o grão da página.
+   É o que tira o creme do aspecto de fundo chapado. */
+.ambient {
+  position: fixed;
+  inset: -25%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side, rgba(192,138,78,0.16), transparent 72%) 16% 20% / 62% 62% no-repeat,
+    radial-gradient(closest-side, rgba(180,80,42,0.09), transparent 72%) 84% 66% / 54% 54% no-repeat,
+    radial-gradient(closest-side, rgba(232,217,195,0.24), transparent 72%) 52% 94% / 48% 48% no-repeat;
+  animation: ambient 90s var(--ease) -30s infinite;
+}
+@keyframes ambient {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(2%, -1.5%, 0) scale(1.07); }
+}
+/* Grão sobre a página inteira, não só sobre o hero. */
+.ambient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='0.2'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient { animation: none; }
+}
+
 h1, h2, h3 {
   font-family: var(--display);
   font-weight: 600;
@@ -136,14 +167,27 @@ a { color: inherit; }
 }
 .skip-link:focus { top: 0; }
 
-/* Rótulo pequeno em mono: dá o ar técnico e honesto de etiqueta. */
+/* Rótulo pequeno em mono: dá o ar técnico e honesto de etiqueta. Fica na
+   tinta secundária, não no acento: o acento em toda seção deixa de ser
+   acento e vira cor de texto. */
 .label {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
   font-family: var(--mono);
   font-size: var(--t-label);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ember-deep);
+  color: var(--ink-55);
   margin: 0 0 1rem;
+}
+/* O traço curto antes do rótulo é onde sobra um fio do acento. */
+.label::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: var(--ember);
+  opacity: 0.65;
 }
 
 .shell {
@@ -491,7 +535,86 @@ a { color: inherit; }
 
 /* ============================== seções ============================== */
 
-.section { padding-block: var(--section); }
+/* =========================================================================
+   A assinatura: o açúcar que assenta.
+   O vídeo termina com açúcar caindo sobre os biscoitos, e a página herda
+   isso: uma poeira fina acumulada na borda de cada seção, como se tivesse
+   caído do hero e parado ali. Grãos claros com uma sombra logo abaixo,
+   senão branco sobre creme não aparece.
+   ========================================================================= */
+
+.section {
+  position: relative;
+  padding-block: var(--section);
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 90px;
+  pointer-events: none;
+  /* Cada grão é um par: a sombra logo abaixo carrega o volume, o brilho
+     por cima só marca a face iluminada. Sobre papel claro é a sombra que
+     faz o grão existir; o brilho sozinho some no creme. */
+  background-image:
+    radial-gradient(circle 1.6px at 7% 12%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 2px at 7.4% 14.5%, rgba(46,29,18,0.34) 55%, transparent),
+    radial-gradient(circle 1.2px at 15% 30%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 1.5px at 15.3% 32%, rgba(46,29,18,0.28) 55%, transparent),
+    radial-gradient(circle 2px at 23% 8%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 2.4px at 23.4% 10.8%, rgba(46,29,18,0.36) 55%, transparent),
+    radial-gradient(circle 1.1px at 31% 44%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 1.4px at 31.3% 46%, rgba(46,29,18,0.26) 55%, transparent),
+    radial-gradient(circle 1.4px at 39% 18%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 1.8px at 39.3% 20.4%, rgba(46,29,18,0.3) 55%, transparent),
+    radial-gradient(circle 1.9px at 47% 6%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 2.3px at 47.4% 8.6%, rgba(46,29,18,0.34) 55%, transparent),
+    radial-gradient(circle 1px at 54% 36%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 1.3px at 54.3% 38%, rgba(46,29,18,0.26) 55%, transparent),
+    radial-gradient(circle 1.5px at 62% 22%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 1.9px at 62.3% 24.4%, rgba(46,29,18,0.3) 55%, transparent),
+    radial-gradient(circle 2px at 71% 10%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 2.4px at 71.4% 12.8%, rgba(46,29,18,0.35) 55%, transparent),
+    radial-gradient(circle 1.2px at 79% 52%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 1.5px at 79.3% 54%, rgba(46,29,18,0.26) 55%, transparent),
+    radial-gradient(circle 1.7px at 86% 26%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 2.1px at 86.3% 28.6%, rgba(46,29,18,0.32) 55%, transparent),
+    radial-gradient(circle 1.3px at 94% 14%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 1.6px at 94.3% 16.2%, rgba(46,29,18,0.28) 55%, transparent),
+    radial-gradient(circle 1.1px at 43% 62%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 1.4px at 43.3% 64%, rgba(46,29,18,0.24) 55%, transparent),
+    radial-gradient(circle 1px at 68% 70%, #FFFEFB 55%, transparent),
+    radial-gradient(circle 1.3px at 68.3% 72%, rgba(46,29,18,0.22) 55%, transparent);
+  /* Denso em cima, some antes da metade: açúcar assenta, não flutua. */
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,0.5) 45%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,0.5) 45%, transparent 100%);
+}
+
+/* A primeira seção depois do hero não leva açúcar: a onda já é a
+   passagem, e os dois juntos brigariam. */
+#sobre::before { display: none; }
+
+/* No rodapé escuro o açúcar aparece sem sombra, só o brilho do grão. */
+.footer { position: relative; }
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 70px;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle 1.4px at 11% 16%, rgba(255,253,248,0.5) 60%, transparent),
+    radial-gradient(circle 1px at 22% 34%, rgba(255,253,248,0.36) 60%, transparent),
+    radial-gradient(circle 1.7px at 34% 10%, rgba(255,253,248,0.44) 60%, transparent),
+    radial-gradient(circle 0.9px at 46% 40%, rgba(255,253,248,0.3) 60%, transparent),
+    radial-gradient(circle 1.4px at 58% 20%, rgba(255,253,248,0.42) 60%, transparent),
+    radial-gradient(circle 1.2px at 70% 30%, rgba(255,253,248,0.34) 60%, transparent),
+    radial-gradient(circle 1.6px at 83% 14%, rgba(255,253,248,0.46) 60%, transparent),
+    radial-gradient(circle 1px at 92% 38%, rgba(255,253,248,0.32) 60%, transparent);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+}
 
 .section-title {
   font-size: var(--t-title);
@@ -527,25 +650,42 @@ a { color: inherit; }
 /* Selo com o ar de carimbo aplicado à mão, não de emblema vetorial. */
 .seal {
   position: absolute;
-  right: -1rem;
-  bottom: -1.5rem;
-  width: 132px;
-  height: 132px;
+  right: -1.5rem;
+  bottom: -2rem;
+  /* Cresceu para o texto caber em tamanho legível: a 9px o carimbo
+     virava enfeite ilegível. */
+  width: 172px;
+  height: 172px;
   display: grid;
   place-content: center;
-  gap: 0.15rem;
+  justify-items: center;
+  gap: 0.4rem;
   text-align: center;
+  padding: 1.25rem;
   border: 1px solid var(--ember);
   border-radius: 50%;
   background: rgba(250, 245, 236, 0.95);
   backdrop-filter: blur(4px);
   rotate: -9deg;
   font-family: var(--mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.1em;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ember-deep);
-  line-height: 1.5;
+  line-height: 1.6;
+  /* Respira devagar, no lugar de ficar parado como adesivo colado. */
+  animation: seal-breathe 7s var(--ease) infinite;
+}
+.seal-top { font-size: 0.75rem; letter-spacing: 0.08em; }
+.seal-rule {
+  width: 34px;
+  height: 1px;
+  background: var(--ember);
+  opacity: 0.5;
+}
+@keyframes seal-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.035); }
 }
 
 /* --- cardápio --- */
@@ -661,7 +801,17 @@ a { color: inherit; }
   color: rgba(250, 245, 236, 0.55);
   white-space: nowrap;
 }
-.basket-item-unit.is-bulk { color: var(--crust); }
+/* O preço com desconto acende uma vez ao ser conquistado: é a recompensa
+   de ter chegado aos 10 do mesmo sabor. */
+.basket-item-unit.is-bulk {
+  color: var(--crust);
+  animation: earned 1.1s var(--ease) 1;
+}
+@keyframes earned {
+  0% { color: rgba(250,245,236,0.55); }
+  30% { color: #F3D9B0; text-shadow: 0 0 12px rgba(192,138,78,0.6); }
+  100% { color: var(--crust); text-shadow: none; }
+}
 .stepper {
   display: inline-flex;
   align-items: center;
@@ -750,6 +900,27 @@ a { color: inherit; }
   transition: transform 1.2s var(--ease) 0.1s;
 }
 .steps.is-drawn::before { transform: scaleY(1); }
+
+/* Um brilho desce pelo fio uma vez, logo depois que ele se desenha, como
+   o próprio açúcar escorrendo. */
+.steps::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 0.5rem;
+  width: 1px;
+  height: 4rem;
+  background: linear-gradient(180deg, transparent, var(--crust), transparent);
+  opacity: 0;
+}
+.steps.is-drawn::after {
+  animation: thread-glow 2.4s var(--ease) 1.1s 1;
+}
+@keyframes thread-glow {
+  0% { opacity: 0; transform: translateY(0); }
+  25% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateY(calc(100% + 12rem)); }
+}
 .step::before {
   content: counter(step, decimal-leading-zero);
   position: absolute;
@@ -863,7 +1034,12 @@ a { color: inherit; }
   .flavor-price { grid-column: 2; justify-self: start; }
   .flavor .btn { grid-column: 2; justify-self: start; }
 
-  .seal { width: 108px; height: 108px; right: 0.5rem; bottom: -1rem; }
+  .seal {
+    width: 132px; height: 132px;
+    right: 0.5rem; bottom: -1.25rem;
+    font-size: 0.625rem; padding: 1rem;
+  }
+  .seal-top { font-size: 0.6875rem; }
 
   /* Barra inferior, como um aplicativo. A altura casa com o padding do
      body acima, senão o rodapé fica escondido atrás dela. */
