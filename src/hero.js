@@ -240,11 +240,26 @@ export function initHero() {
   }
 
   function settle() {
-    // Quem pediu menos movimento recebe o hero já montado e legível.
-    intro = 1;
+    // Quem pediu menos movimento recebe o hero já montado, sem animação.
+    // No hero estático comum a entrada ainda roda, então aqui não se
+    // força intro=1: forçar faria o texto aparecer pronto e piscar de
+    // volta ao início quando a entrada começasse.
+    if (reduce.matches) intro = 1;
     drawFrame(nearestLoaded(FRAME_COUNT - 1), 1);
-    choreograph(0.4);
+    choreograph(0);
   }
+
+  // Estas cinco condições precisam ser idênticas às do CSS, senão um lado
+  // esconde o que o outro mostra e o hero fica vazio.
+  const STILL_GATES = [
+    "(max-width: 760px)",
+    "(orientation: portrait) and (max-width: 1024px)",
+    "(orientation: portrait) and (pointer: coarse)",
+    "(orientation: landscape) and (pointer: coarse) and (max-height: 560px)",
+    "(prefers-reduced-motion: reduce)",
+  ].map((q) => window.matchMedia(q));
+
+  const wantsStill = () => STILL_GATES.some((q) => q.matches);
 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -281,8 +296,20 @@ export function initHero() {
     settle();
   }
 
-  const applyMode = () => (reduce.matches ? disarm() : arm());
-  reduce.addEventListener("change", applyMode);
+  const applyMode = () => {
+    if (wantsStill()) {
+      disarm();
+      return;
+    }
+    // Só aqui os quadros começam a ser baixados. Quem fica no hero
+    // estático nunca paga por eles, e quem gira o aparelho para paisagem
+    // dispara o carregamento neste momento, não antes.
+    loadFrames();
+    arm();
+  };
+  // Decidido ao vivo: girar o aparelho, redimensionar a janela ou mudar a
+  // preferência de movimento troca de modo sem recarregar a página.
+  STILL_GATES.forEach((q) => q.addEventListener("change", applyMode));
 
   function onResize() {
     resize();
@@ -299,37 +326,52 @@ export function initHero() {
     }).observe(canvas);
   }
 
+  let loaded = 0;
+  let loading = null;
+
+  function loadFrames() {
+    if (loading) return loading;
+    // Array.from, não images.map: `new Array(n)` é esparso e o map pula
+    // os buracos, então nenhum quadro chegaria a ser pedido.
+    const loads = Array.from({ length: FRAME_COUNT }, (_, i) => {
+      const img = new Image();
+      img.decoding = "async";
+      images[i] = img;
+      return new Promise((resolve) => {
+        const done = () => {
+          loaded++;
+          // A entrada começa quando o primeiro quadro do percurso está
+          // pronto: o texto surgindo sobre um canvas vazio seria pior que
+          // não animar nada.
+          if (i === FRAME_START) {
+            resize();
+            repaint();
+            if (!reduce.matches && introStart === null) {
+              requestAnimationFrame(runIntro);
+            }
+          }
+          resolve();
+        };
+        img.onload = done;
+        img.onerror = done;
+        img.src = framePath(i);
+      });
+    });
+    loading = Promise.all(loads).then(() => {});
+    return loading;
+  }
+
   resize();
   applyMode();
 
-  let loaded = 0;
-  // Array.from, não images.map: `new Array(n)` é esparso e o map pula os
-  // buracos, então nenhum quadro chegaria a ser pedido.
-  const loads = Array.from({ length: FRAME_COUNT }, (_, i) => {
-    const img = new Image();
-    img.decoding = "async";
-    images[i] = img;
-    return new Promise((resolve) => {
-      const done = () => {
-        loaded++;
-        // A entrada começa quando o primeiro quadro do percurso está
-        // pronto: o texto surgindo sobre um canvas vazio seria pior que
-        // não animar nada.
-        if (i === FRAME_START) {
-          resize();
-          repaint();
-          if (!reduce.matches && introStart === null) requestAnimationFrame(runIntro);
-        }
-        resolve();
-      };
-      img.onload = done;
-      img.onerror = done;
-      img.src = framePath(i);
-    });
-  });
+  // No hero estático o texto ainda precisa entrar: sem quadro para
+  // esperar, a entrada começa de imediato.
+  if (wantsStill() && !reduce.matches && introStart === null) {
+    requestAnimationFrame(runIntro);
+  }
 
   return {
-    ready: Promise.all(loads).then(() => {}),
-    progress: () => loaded / FRAME_COUNT,
+    ready: loading || Promise.resolve(),
+    progress: () => (loading ? loaded / FRAME_COUNT : 1),
   };
 }

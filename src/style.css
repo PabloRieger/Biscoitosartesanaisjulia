@@ -293,6 +293,29 @@ a { color: inherit; }
   place-items: center;
 }
 .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* O portão do hero estático. As mesmas cinco condições existem no JS, e
+   precisam bater exatamente: se um lado mostra o que o outro esconde, o
+   visitante fica com um hero vazio. */
+.hero-still {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 760px),
+       (orientation: portrait) and (max-width: 1024px),
+       (orientation: portrait) and (pointer: coarse),
+       (orientation: landscape) and (pointer: coarse) and (max-height: 560px),
+       (prefers-reduced-motion: reduce) {
+  .hero-canvas { display: none; }
+  .hero-still { display: block; }
+  /* Sem percurso de vídeo, a faixa alta perde a razão de existir. */
+  .hero-track { height: 100svh; }
+  .hero-hint { display: none; }
+}
 /* Escurece só o suficiente para o texto: a cena precisa respirar, senão
    vira um fundo marrom sem assunto. O contraste é medido, não chutado. */
 .hero-veil {
