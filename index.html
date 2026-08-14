@@ -54,8 +54,8 @@
     }
   }
   </script>
-  <script type="module" crossorigin src="./assets/index-CGmBhT0O.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-qpdeqgwF.css">
+  <script type="module" crossorigin src="./assets/index-B2wN_8e7.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-koLQzffx.css">
 </head>
 <body>
 
@@ -76,6 +76,12 @@
     <section class="hero-track" id="topo" data-hero-track>
       <div class="hero">
         <canvas class="hero-canvas" data-hero-canvas aria-hidden="true"></canvas>
+        <!-- Retrato e telas pequenas recebem esta imagem no lugar dos 96
+             quadros: a composição é 16:9 e não sobrevive ao corte, e assim
+             o celular não baixa 3 MB para ver um vídeo mal enquadrado. -->
+        <img class="hero-still" data-hero-still src="./img/hero-mobile.webp"
+             width="810" height="1080" decoding="async"
+             alt="Biscoitos artesanais recebendo açúcar polvilhado sobre uma bancada de madeira" />
         <div class="hero-veil" aria-hidden="true"></div>
         <div class="hero-vignette" aria-hidden="true"></div>
         <div class="hero-grain" aria-hidden="true"></div>
