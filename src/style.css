@@ -588,55 +588,13 @@ a { color: inherit; }
 
 /* ============================== seções ============================== */
 
-/* =========================================================================
-   A assinatura: o açúcar que assenta.
-   O vídeo termina com açúcar caindo sobre os biscoitos, e a página herda
-   isso: uma poeira fina acumulada na borda de cada seção, como se tivesse
-   caído do hero e parado ali. Grãos claros com uma sombra logo abaixo,
-   senão branco sobre creme não aparece.
-   ========================================================================= */
+/* O açúcar é a assinatura, mas mora só no hero, onde ele CAI: no vídeo do
+   desktop e nas partículas do celular. Assentado na borda das seções ele
+   virava sujeira na página e foi retirado. */
 
 .section {
   position: relative;
   padding-block: var(--section);
-}
-
-.section::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 150px;
-  pointer-events: none;
-  /* Centenas de grãos, com montinhos onde o açúcar juntou. Cada grão tem
-     a sombra logo abaixo: sobre papel claro é ela que dá volume, o brilho
-     sozinho sumiria no creme. */
-  background-image: url("/img/sugar-light.svg");
-  background-repeat: repeat-x;
-  background-size: 1200px 150px;
-  /* Denso em cima e ralo embaixo: açúcar assenta, não flutua. */
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,0.65) 55%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,0.65) 55%, transparent 100%);
-}
-
-/* A primeira seção depois do hero não leva açúcar: a onda já é a
-   passagem, e os dois juntos brigariam. */
-#sobre::before { display: none; }
-
-/* No rodapé escuro o açúcar aparece sem sombra, só o brilho do grão. */
-.footer { position: relative; }
-.footer::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 130px;
-  pointer-events: none;
-  /* No escuro o grão dispensa sombra: o brilho já o separa do fundo. */
-  background-image: url("/img/sugar-dark.svg");
-  background-repeat: repeat-x;
-  background-size: 1200px 150px;
-  opacity: 0.85;
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,0.5) 55%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,0.5) 55%, transparent 100%);
 }
 
 .section-title {
