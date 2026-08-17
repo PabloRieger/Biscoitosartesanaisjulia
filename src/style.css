@@ -731,6 +731,22 @@ a { color: inherit; }
   margin: 0;
   max-width: 46ch;
 }
+/* Ingredientes por extenso: transparência é o que um artesanal tem de
+   melhor a mostrar, e resolve a pergunta de quem tem alergia. */
+.flavor-ing {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  line-height: 1.7;
+  color: var(--ink-55);
+  margin: 0.5rem 0 0;
+  max-width: 52ch;
+}
+.flavor-warn {
+  font-style: normal;
+  color: var(--ember-deep);
+  white-space: nowrap;
+}
+
 .flavor-price {
   font-family: var(--mono);
   font-size: 1rem;
@@ -923,6 +939,31 @@ a { color: inherit; }
   font-size: var(--t-small);
   color: var(--ink-55);
   max-width: 46ch;
+}
+
+/* --- bom saber --- */
+
+/* Três colunas de igual peso: aqui não há hierarquia entre validade,
+   alergênico e lembrancinha, cada um resolve uma dúvida diferente. */
+.facts {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+.fact h3 {
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ink-15);
+}
+.fact p {
+  font-size: var(--t-small);
+  color: var(--ink-55);
+  max-width: 42ch;
 }
 
 /* --- rodapé --- */

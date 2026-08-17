@@ -38,7 +38,8 @@
     "telephone": "+5567991105206",
     "priceRange": "R$ 12 - R$ 15",
     "servesCuisine": "Biscoitos artesanais",
-    "areaServed": "Mato Grosso do Sul",
+    "areaServed": { "@type": "City", "name": "Campo Grande", "addressRegion": "MS" },
+    "paymentAccepted": "Pix, cartão de débito, cartão de crédito",
     "hasMenu": {
       "@type": "Menu",
       "hasMenuSection": {
@@ -70,6 +71,7 @@
       <a href="#sobre">Quem faz</a>
       <a href="#cardapio">Cardápio</a>
       <a href="#como-pedir">Como pedir</a>
+      <a href="#bom-saber">Bom saber</a>
     </nav>
     <a class="btn btn-ember btn-sm" href="https://wa.me/5567991105206?text=Oi%20Julia!%20Quero%20fazer%20uma%20encomenda%20de%20biscoitos." target="_blank" rel="noopener">Encomendar</a>
   </header>
@@ -164,6 +166,7 @@
             <div>
               <h3 class="flavor-name">Amanteigado</h3>
               <p class="flavor-desc">Manteiga, açúcar e uma receita que não muda desde sempre.</p>
+              <p class="flavor-ing">Farinha de trigo, margarina, açúcar.</p>
             </div>
             <p class="flavor-price">R$ 15<span> /200 g</span></p>
             <button class="btn btn-ghost btn-sm" type="button" data-add="Amanteigado">Adicionar</button>
@@ -174,6 +177,7 @@
             <div>
               <h3 class="flavor-name">Casadinho de goiabada</h3>
               <p class="flavor-desc">Dois biscoitos abraçando um recheio generoso de goiabada.</p>
+              <p class="flavor-ing">Farinha de trigo, margarina, açúcar, goiabada.</p>
             </div>
             <p class="flavor-price">R$ 15<span> /200 g</span></p>
             <button class="btn btn-ghost btn-sm" type="button" data-add="Casadinho de goiabada">Adicionar</button>
@@ -184,6 +188,7 @@
             <div>
               <h3 class="flavor-name">Chocolate</h3>
               <p class="flavor-desc">Gotas de chocolate em cada mordida, sem economizar.</p>
+              <p class="flavor-ing">Farinha de trigo, margarina, açúcar, chocolate em pó 50%.</p>
             </div>
             <p class="flavor-price">R$ 15<span> /200 g</span></p>
             <button class="btn btn-ghost btn-sm" type="button" data-add="Chocolate">Adicionar</button>
@@ -194,6 +199,7 @@
             <div>
               <h3 class="flavor-name">Nutella</h3>
               <p class="flavor-desc">Creme de avelã de verdade, generoso no recheio.</p>
+              <p class="flavor-ing">Farinha de trigo, margarina, açúcar, ganache de chocolate com avelã. <em class="flavor-warn">contém avelã</em></p>
             </div>
             <p class="flavor-price">R$ 15<span> /200 g</span></p>
             <button class="btn btn-ghost btn-sm" type="button" data-add="Nutella">Adicionar</button>
@@ -204,6 +210,7 @@
             <div>
               <h3 class="flavor-name">Café</h3>
               <p class="flavor-desc">Café coado na massa, para quem gosta de sabor forte.</p>
+              <p class="flavor-ing">Farinha de trigo, margarina, açúcar, café gourmet liofilizado.</p>
             </div>
             <p class="flavor-price">R$ 15<span> /200 g</span></p>
             <button class="btn btn-ghost btn-sm" type="button" data-add="Café">Adicionar</button>
@@ -241,14 +248,53 @@
             <p>Pode misturar quantos quiser no mesmo pedido.</p>
           </li>
           <li class="step reveal">
-            <h3>Chame no WhatsApp</h3>
-            <p>Com um pouco de antecedência. Não tem horário fixo de atendimento, mas encomenda de última hora fica mais difícil.</p>
+            <h3>Chame com 3 dias de antecedência</h3>
+            <p>
+              Três dias é o tempo de fazer os biscoitos, mas a data ainda
+              depende da agenda daquela semana. Confirme com a gente antes
+              de contar com ela.
+            </p>
           </li>
           <li class="step reveal">
             <h3>Combine e receba</h3>
-            <p>A entrega ou retirada e a forma de pagamento a gente combina por lá mesmo.</p>
+            <p>
+              Atendemos Campo Grande, com entrega ou retirada. O pagamento
+              é por Pix, cartão de débito ou crédito. Onde entregar e como
+              fica a gente acerta na conversa.
+            </p>
           </li>
         </ol>
+      </div>
+    </section>
+
+    <section class="section" id="bom-saber">
+      <div class="shell">
+        <p class="label reveal">Bom saber</p>
+        <ul class="facts">
+          <li class="fact reveal">
+            <h3>Duram 30 dias</h3>
+            <p>
+              Guarde em pote fechado, em lugar seco e fresco. É produto
+              artesanal, sem nenhum conservante, e é por isso que vence.
+            </p>
+          </li>
+          <li class="fact reveal">
+            <h3>Todos levam glúten</h3>
+            <p>
+              A base é farinha de trigo. O sabor Nutella leva avelã, e os
+              demais podem conter leite e soja pela margarina e pelo
+              chocolate. Tem alergia? Fale com a gente antes de pedir.
+            </p>
+          </li>
+          <li class="fact reveal">
+            <h3>Dá para fazer lembrancinha</h3>
+            <p>
+              Para festa e evento a gente monta pacotes menores, e a
+              personalização sai junto com uma gráfica. Chame no WhatsApp
+              que a gente combina.
+            </p>
+          </li>
+        </ul>
       </div>
     </section>
   </main>
@@ -265,7 +311,7 @@
           <p class="footer-line">Encomendas pelo WhatsApp</p>
         </div>
       </div>
-      <p class="footer-line footer-note">Biscoitos da Julia, Mato Grosso do Sul.</p>
+      <p class="footer-line footer-note">Biscoitos da Julia, Campo Grande, Mato Grosso do Sul.</p>
     </div>
   </footer>
 
