@@ -123,28 +123,6 @@
       </svg>
     </div>
 
-    <!-- O pacote pendurado no fim do hero, e o barbante que desce dele. O
-         desenho acaba onde a imagem foi cortada; o resto do cordão é
-         gerado em JS a partir da altura real da página. -->
-    <div class="knot" aria-hidden="true">
-      <img class="knot-bag" data-pacote src="/img/pacote.webp"
-           width="420" height="753" loading="lazy" decoding="async" alt="" />
-    </div>
-    <div class="cordao" data-cordao aria-hidden="true">
-      <svg preserveAspectRatio="none" focusable="false">
-        <defs>
-          <!-- O esmaecer é ao longo do barbante, não ao longo da rolagem:
-               perto do pacote ele tem o peso do desenho, e vai virando
-               sussurro até o rodapé. -->
-          <linearGradient id="cordao-fade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#2E1D12" stop-opacity="0.85" />
-            <stop offset="1" stop-color="#2E1D12" stop-opacity="0.3" />
-          </linearGradient>
-        </defs>
-        <g data-cordao-grupo fill="none" stroke="url(#cordao-fade)"></g>
-      </svg>
-    </div>
-
     <section class="section" id="sobre">
       <div class="shell about">
         <div class="reveal">
