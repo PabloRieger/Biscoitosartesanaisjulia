@@ -55,8 +55,8 @@
     }
   }
   </script>
-  <script type="module" crossorigin src="./assets/index-BkmU8Tlb.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-Dxv-GL0D.css">
+  <script type="module" crossorigin src="./assets/index-CbXTHm8b.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Bn3YF_cG.css">
 </head>
 <body>
 
@@ -167,7 +167,6 @@
             <div>
               <h3 class="flavor-name">Amanteigado</h3>
               <p class="flavor-desc">Manteiga, açúcar e uma receita que não muda desde sempre.</p>
-              <p class="flavor-ing">Farinha de trigo, margarina, açúcar.</p>
             </div>
             <p class="flavor-price">R$ 15<span> /200 g</span></p>
             <button class="btn btn-ghost btn-sm" type="button" data-add="Amanteigado">Adicionar</button>
@@ -178,7 +177,6 @@
             <div>
               <h3 class="flavor-name">Casadinho de goiabada</h3>
               <p class="flavor-desc">Dois biscoitos abraçando um recheio generoso de goiabada.</p>
-              <p class="flavor-ing">Farinha de trigo, margarina, açúcar, goiabada.</p>
             </div>
             <p class="flavor-price">R$ 15<span> /200 g</span></p>
             <button class="btn btn-ghost btn-sm" type="button" data-add="Casadinho de goiabada">Adicionar</button>
@@ -189,7 +187,6 @@
             <div>
               <h3 class="flavor-name">Chocolate</h3>
               <p class="flavor-desc">Gotas de chocolate em cada mordida, sem economizar.</p>
-              <p class="flavor-ing">Farinha de trigo, margarina, açúcar, chocolate em pó 50%.</p>
             </div>
             <p class="flavor-price">R$ 15<span> /200 g</span></p>
             <button class="btn btn-ghost btn-sm" type="button" data-add="Chocolate">Adicionar</button>
@@ -200,7 +197,6 @@
             <div>
               <h3 class="flavor-name">Nutella</h3>
               <p class="flavor-desc">Creme de avelã de verdade, generoso no recheio.</p>
-              <p class="flavor-ing">Farinha de trigo, margarina, açúcar, ganache de chocolate com avelã. <em class="flavor-warn">contém avelã</em></p>
             </div>
             <p class="flavor-price">R$ 15<span> /200 g</span></p>
             <button class="btn btn-ghost btn-sm" type="button" data-add="Nutella">Adicionar</button>
@@ -211,12 +207,19 @@
             <div>
               <h3 class="flavor-name">Café</h3>
               <p class="flavor-desc">Café coado na massa, para quem gosta de sabor forte.</p>
-              <p class="flavor-ing">Farinha de trigo, margarina, açúcar, café gourmet liofilizado.</p>
             </div>
             <p class="flavor-price">R$ 15<span> /200 g</span></p>
             <button class="btn btn-ghost btn-sm" type="button" data-add="Café">Adicionar</button>
           </li>
         </ul>
+
+        <!-- Uma linha só, no rodapé do cardápio: quem tem restrição
+             precisa da informação, mas ela não pode roubar a leitura dos
+             sabores. -->
+        <p class="menu-note reveal">
+          Contém glúten e leite. O sabor Nutella também leva avelã. Pode
+          conter soja.
+        </p>
 
         <!-- O visitante monta o pedido aqui e a mensagem sai pronta. -->
         <div class="basket" data-basket hidden>
@@ -280,11 +283,10 @@
             </p>
           </li>
           <li class="fact reveal">
-            <h3>Todos levam glúten e leite</h3>
+            <h3>Tem alguma restrição?</h3>
             <p>
-              A base é farinha de trigo, e a margarina leva leite. O sabor
-              Nutella leva avelã. Pode conter soja. Tem alergia? Fale com a
-              gente antes de pedir.
+              Fale com a gente antes de pedir. A composição de cada sabor
+              a gente passa na conversa, com calma.
             </p>
           </li>
           <li class="fact reveal">
