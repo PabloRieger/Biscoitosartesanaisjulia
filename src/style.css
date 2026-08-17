@@ -613,6 +613,25 @@ a { color: inherit; }
   text-wrap: balance;
 }
 
+/* Faixa desenhada entre "Como pedir" e "Bom saber": duas seções de texto
+   seguidas somavam mais de cem vh sem nenhuma imagem. Alinha com a
+   largura do texto em vez de sangrar a tela inteira — sangrando lia como
+   banner, e aqui ela é um respiro editorial. A opacidade mora na imagem,
+   não no .band, senão a entrada do .reveal (que força opacity: 1) a
+   apagaria. */
+.band {
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.band-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Abaixo de ~0.7 o traço lava e a faixa lê como marca d'água. */
+  opacity: 0.78;
+}
+
 /* --- sobre --- */
 
 .about {
@@ -932,6 +951,20 @@ a { color: inherit; }
   background: var(--paper);
   padding-block: 0.15rem;
 }
+/* Marca de cada passo, na borda direita. Empilhada acima do título ela
+   empurrava o número para longe da linha do h3 e o "02" passava a rotular
+   o desenho em vez do passo; à direita, os números à esquerda e as marcas
+   à direita formam duas colunas que se espelham. Fraca de propósito: a
+   faixa desenhada vem logo abaixo e não pode ter concorrência. */
+.step { padding-right: 4rem; }
+.step-art {
+  position: absolute;
+  right: 0;
+  top: -4px;
+  width: 46px;
+  height: auto;
+  opacity: 0.62;
+}
 .step h3 {
   font-size: 1.15rem;
   font-weight: 500;
@@ -940,7 +973,8 @@ a { color: inherit; }
 .step p {
   font-size: var(--t-small);
   color: var(--ink-55);
-  max-width: 46ch;
+  /* 40ch e não 46ch: a marca à direita come parte da linha. */
+  max-width: 40ch;
 }
 
 /* --- bom saber --- */
