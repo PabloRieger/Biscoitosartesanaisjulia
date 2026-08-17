@@ -181,13 +181,22 @@ a { color: inherit; }
   color: var(--ink-55);
   margin: 0 0 1rem;
 }
-/* O traço curto antes do rótulo é onde sobra um fio do acento. */
+/* O traço curto antes do rótulo é onde sobra um fio do acento. Ele
+   também é o elemento vivo de cada seção: respira devagar, no nível
+   sussurro, e por estar em todas resolve o problema de uma vez sem
+   colocar movimento em cima do texto que a pessoa está lendo. */
 .label::before {
   content: "";
   width: 1.5rem;
   height: 1px;
   background: var(--ember);
   opacity: 0.65;
+  transform-origin: left;
+  animation: label-breathe 6s var(--ease) infinite;
+}
+@keyframes label-breathe {
+  0%, 100% { transform: scaleX(0.72); opacity: 0.45; }
+  50% { transform: scaleX(1); opacity: 0.8; }
 }
 
 .shell {
@@ -964,11 +973,38 @@ a { color: inherit; }
 /* --- rodapé --- */
 
 .footer {
+  position: relative;
+  overflow: hidden;
   background: var(--ink);
   color: var(--paper);
   padding-block: clamp(3.5rem, 8vw, 6rem);
 }
+/* O elemento vivo do rodapé: um calor lento atrás do nome, como a luz de
+   tarde que atravessa o site inteiro. */
+.footer::after {
+  content: "";
+  position: absolute;
+  left: -10%;
+  bottom: -60%;
+  width: 70%;
+  height: 160%;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(192,138,78,0.16), transparent 70%);
+  animation: footer-glow 22s var(--ease) infinite;
+}
+@keyframes footer-glow {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.75; }
+  50% { transform: translate3d(6%, -4%, 0) scale(1.12); opacity: 1; }
+}
+
+.footer-cta {
+  display: grid;
+  justify-items: start;
+  gap: 0.85rem;
+}
 .footer-grid {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -998,6 +1034,8 @@ a { color: inherit; }
 }
 .footer-phone:hover { text-decoration: underline; }
 .footer-note {
+  position: relative;
+  z-index: 1;
   margin-top: 3rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(250, 245, 236, 0.14);
@@ -1022,6 +1060,7 @@ a { color: inherit; }
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .steps::before { transform: scaleY(1); }
+  .label::before { transform: scaleX(1); opacity: 0.65; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

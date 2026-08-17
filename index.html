@@ -131,17 +131,19 @@
           <p class="about-lead">
             Ela fez o curso de cozinheirinhos do IGA e quer ser chefe, com um
             negócio só dela. Por enquanto, cada encomenda sai da cozinha de
-            casa, com receitas exclusivas e uma fornada de cada vez.
+            casa, uma fornada de cada vez.
           </p>
         </div>
 
         <figure class="about-figure reveal">
           <img src="/img/bancada.webp" width="1200" height="648" loading="lazy" decoding="async"
                alt="Bancada de madeira com rolo, tábua enfarinhada, tigela de açúcar mascavo, pano de linho e cortador de biscoito" />
+          <!-- O selo não repete o hero: lá já se diz "receitas exclusivas,
+               testadas". Aqui entra o que só esta seção conta. -->
           <div class="seal" aria-hidden="true">
-            <span class="seal-top">Receitas exclusivas</span>
+            <span class="seal-top">Feito em casa</span>
             <span class="seal-rule"></span>
-            <span>testadas e<br />aprovadas</span>
+            <span>sem nenhum<br />conservante</span>
           </div>
         </figure>
       </div>
@@ -152,7 +154,7 @@
         <div class="menu-head reveal">
           <div>
             <p class="label">Cardápio</p>
-            <h2 class="section-title">Cinco sabores, sempre os mesmos</h2>
+            <h2 class="section-title">Cinco sabores. Nenhum a mais.</h2>
           </div>
           <p class="price-note">
             <strong>R$ 15</strong> o pacote de 200 g<br />
@@ -272,7 +274,10 @@
 
     <section class="section" id="bom-saber">
       <div class="shell">
-        <p class="label reveal">Bom saber</p>
+        <div class="reveal">
+          <p class="label">Bom saber</p>
+          <h2 class="section-title">Antes de pedir</h2>
+        </div>
         <ul class="facts">
           <li class="fact reveal">
             <h3>Duram 30 dias</h3>
@@ -308,9 +313,13 @@
           <p class="footer-brand">Biscoitos da <em>Julia</em></p>
           <p class="footer-line">Feito com carinho, um pedido de cada vez.</p>
         </div>
-        <div>
+        <!-- A última coisa que a pessoa vê depois de ler tudo precisa ter
+             para onde ir: antes daqui o rodapé terminava sem convite. -->
+        <div class="footer-cta">
+          <a class="btn btn-ember" href="https://wa.me/5567991105206?text=Oi%20Julia!%20Quero%20fazer%20uma%20encomenda%20de%20biscoitos." target="_blank" rel="noopener">
+            Fazer uma encomenda
+          </a>
           <a class="footer-phone" href="https://wa.me/5567991105206?text=Oi%20Julia!%20Quero%20fazer%20uma%20encomenda%20de%20biscoitos." target="_blank" rel="noopener">(67) 9 9110-5206</a>
-          <p class="footer-line">Encomendas pelo WhatsApp</p>
         </div>
       </div>
       <p class="footer-line footer-note">Biscoitos da Julia, Campo Grande, Mato Grosso do Sul.</p>
