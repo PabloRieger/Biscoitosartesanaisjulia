@@ -603,8 +603,43 @@ a { color: inherit; }
    desktop e nas partículas do celular. Assentado na borda das seções ele
    virava sujeira na página e foi retirado. */
 
+/* O pacote pendurado logo depois da onda, e o barbante que desce dele
+   pela página. O cordão fica atrás de tudo; as seções não têm fundo
+   próprio, então ele aparece nos vãos e some por trás do texto denso. */
+.knot {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  /* Sobe para encostar na onda: o pacote tem de parecer pendurado na
+     borda do hero, não pousado no meio do papel. */
+  margin-top: calc(var(--section) * -0.5);
+}
+.knot-bag {
+  width: clamp(150px, 18vw, 232px);
+  height: auto;
+}
+
+.cordao {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.cordao svg { display: block; width: 100%; height: 100%; }
+/* A cor vem do gradiente no próprio SVG, para o esmaecer acompanhar o
+   comprimento do barbante. */
+.cordao path {
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
 .section {
   position: relative;
+  /* Acima do cordão: sem z-index os dois disputam e o barbante passa por
+     cima das fotos e da cesta. */
+  z-index: 1;
   padding-block: var(--section);
 }
 
@@ -745,7 +780,9 @@ a { color: inherit; }
   border-bottom: 1px solid var(--ink-15);
   transition: background 0.3s var(--ease);
 }
-.flavor:hover { background: var(--paper-warm); }
+/* Translúcido de propósito: opaco, o realce apagava o barbante que passa
+   atrás e abria uma falha horizontal no meio dele. */
+.flavor:hover { background: rgba(243, 234, 219, 0.72); }
 .flavor-num {
   font-family: var(--mono);
   font-size: var(--t-label);
