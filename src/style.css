@@ -1011,6 +1011,22 @@ a { color: inherit; }
   color: var(--paper);
   padding-block: clamp(3.5rem, 8vw, 6rem);
 }
+/* Textura de fundo: a mesma bancada da seção "Quem faz", desfocada e com
+   o brilho reassado dentro de uma faixa estreita que vai da tinta até
+   rgb(60,39,27). O escurecimento mora no arquivo, não numa opacidade
+   aqui: assim o pixel mais claro é conhecido e o contraste do texto pode
+   ser calculado em vez de chutado — a foto crua tem estouros quase
+   brancos que derrubavam o telefone para 4.24. */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: url("/img/rodape-textura.webp") center / cover no-repeat;
+  /* Espelhada para não repetir de cara a mesma foto que aparece acima. */
+  transform: scaleX(-1);
+}
+
 /* O elemento vivo do rodapé: um calor lento atrás do nome, como a luz de
    tarde que atravessa o site inteiro. */
 .footer::after {
@@ -1072,7 +1088,10 @@ a { color: inherit; }
   padding-top: 1.5rem;
   border-top: 1px solid rgba(250, 245, 236, 0.14);
   font-size: var(--t-label);
-  color: rgba(250, 245, 236, 0.45);
+  /* 0.45 media 4.09 sobre a tinta, abaixo do piso de 4.5 para texto
+     pequeno — já estava assim antes da textura entrar. 0.52 passa nos
+     dois fundos. */
+  color: rgba(250, 245, 236, 0.52);
 }
 
 /* ============================== barra do celular ============================== */
