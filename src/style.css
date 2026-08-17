@@ -731,20 +731,15 @@ a { color: inherit; }
   margin: 0;
   max-width: 46ch;
 }
-/* Ingredientes por extenso: transparência é o que um artesanal tem de
-   melhor a mostrar, e resolve a pergunta de quem tem alergia. */
-.flavor-ing {
+/* Observação de alergênicos: uma linha no rodapé do cardápio, discreta
+   mas legível. Repetida por sabor ela roubava a leitura da lista. */
+.menu-note {
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   line-height: 1.7;
   color: var(--ink-55);
-  margin: 0.5rem 0 0;
-  max-width: 52ch;
-}
-.flavor-warn {
-  font-style: normal;
-  color: var(--ember-deep);
-  white-space: nowrap;
+  margin: 1.25rem 0 0;
+  max-width: 60ch;
 }
 
 .flavor-price {
