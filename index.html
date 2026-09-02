@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Doce Miúdo da Ju, biscoitos artesanais por encomenda</title>
+  <meta name="description" content="Biscoitos artesanais feitos por encomenda em Campo Grande: amanteigado, casadinho de goiabada, chocolate, casadinho de creme de avelã, casadinho de creme de avelã (chocolate) e café. Pedido pelo WhatsApp." />
+  <!-- Cor da barra do navegador no celular. Era a tinta da paleta antiga
+       (#2E1D12), o que deixava o topo escuro sobre uma página que hoje
+       abre em papel claro. -->
+  <meta name="theme-color" content="#F7ECEB" />
+  <link rel="canonical" href="https://pablorieger.github.io/Biscoitosartesanaisjulia/" />
+  <!-- A marca de verdade no lugar do desenho de biscoitos que servia de
+       quebra-galho. É o rosto dela recortado da logo, num disco ember: a
+       logo inteira vira mancha a 32px, mas o rosto sobre disco escuro
+       ainda lê. -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/icone-32.png" />
+  <link rel="apple-touch-icon" href="/img/icone-180.png" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Doce Miúdo da Ju" />
+  <!-- É esta a linha em negrito que aparece embaixo da imagem na prévia do
+       WhatsApp. Diferente do <title> da aba de propósito: lá cabe a frase
+       inteira, aqui a marca precisa caber numa linha só. -->
+  <meta property="og:title" content="Doce Miúdo da Ju - Biscoitos Artesanais" />
+  <meta property="og:description" content="Biscoitos artesanais feitos por encomenda: amanteigado, casadinho de goiabada, chocolate, casadinho de creme de avelã, casadinho de creme de avelã (chocolate) e café. Peça pelo WhatsApp." />
+  <meta property="og:url" content="https://pablorieger.github.io/Biscoitosartesanaisjulia/" />
+  <!-- O nome do arquivo muda a cada versão de propósito: o WhatsApp guarda a
+       prévia por muito tempo e continuaria mostrando a antiga. A v2 dizia
+       "Biscoitos da Julia", nome aposentado desde agosto. -->
+  <meta property="og:image" content="https://pablorieger.github.io/Biscoitosartesanaisjulia/og-image-v6.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Muitos casadinhos de goiabada polvilhados de açúcar, cada um com uma listra vermelha no meio, preenchendo o quadro, e abaixo Doce Miúdo da Ju, Biscoitos Artesanais, ao lado da ilustração da Ju de touca de chef segurando uma bandeja" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+
+  <noscript>
+    <style>
+      /* O conteúdo entra com um fade que o JS comanda: .reveal nasce em
+         opacity 0 e o script põe a classe .is-in. Sem JS — script que não
+         carrega numa rede ruim, ou um erro numa linha do bundle — onze dos
+         treze títulos do site somem, e o cardápio inteiro vira tela vazia.
+         Aqui eles voltam, parados. */
+      .reveal { opacity: 1 !important; transform: none !important; }
+      /* O fio dos passos é desenhado por um observador; sem ele ficaria
+         numa linha de altura zero. */
+      .steps::before { transform: scaleY(1) !important; }
+      /* Os "Adicionar" montam a cesta, que é feita em JS. Sem ele seriam
+         botões que não fazem nada — e botão morto é pior que botão nenhum.
+         Os links de WhatsApp continuam de pé, então dá para encomendar. */
+      .flavor .btn { display: none !important; }
+    </style>
+  </noscript>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "Doce Miúdo da Ju",
+    "description": "Biscoitos artesanais feitos por encomenda em Campo Grande, MS.",
+    "image": "https://pablorieger.github.io/Biscoitosartesanaisjulia/og-image-v6.jpg",
+    "url": "https://pablorieger.github.io/Biscoitosartesanaisjulia/",
+    "sameAs": ["https://www.instagram.com/docemiudodaju/"],
+    "telephone": "+5567991105206",
+    "priceRange": "R$ 18",
+    "servesCuisine": "Biscoitos artesanais",
+    "areaServed": { "@type": "City", "name": "Campo Grande", "addressRegion": "MS" },
+    "paymentAccepted": "Pix, cartão de débito, cartão de crédito",
+    "hasMenu": {
+      "@type": "Menu",
+      "hasMenuSection": {
+        "@type": "MenuSection",
+        "name": "Biscoitos",
+        "hasMenuItem": [
+          { "@type": "MenuItem", "name": "Amanteigado", "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "BRL", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 250, "unitCode": "GRM" } } },
+          { "@type": "MenuItem", "name": "Casadinho de goiabada", "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "BRL", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 250, "unitCode": "GRM" } } },
+          { "@type": "MenuItem", "name": "Chocolate", "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "BRL", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 250, "unitCode": "GRM" } } },
+          { "@type": "MenuItem", "name": "Casadinho de creme de avelã", "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "BRL", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 250, "unitCode": "GRM" } } },
+          { "@type": "MenuItem", "name": "Casadinho de creme de avelã (chocolate)", "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "BRL", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 250, "unitCode": "GRM" } } },
+          { "@type": "MenuItem", "name": "Café", "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "BRL", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 250, "unitCode": "GRM" } } }
+        ]
+      }
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- Uma camada só atrás de tudo, na luz de tarde do vídeo: rolar passa
+       a ser atravessar um lugar em vez de passar por blocos empilhados. -->
+  <div class="ambient" aria-hidden="true"></div>
+
+  <header class="topbar" data-topbar>
+    <a class="brand" href="#topo">Doce Miúdo da Ju</a>
+    <nav class="topnav" aria-label="Seções">
+      <a href="#sobre">Quem faz</a>
+      <a href="#cardapio">Cardápio</a>
+      <a href="#como-pedir">Como pedir</a>
+    </nav>
+    <!-- O contador só aparece quando há pedido: reforça em quem já rolou
+         para fora do cardápio e não vê mais a cesta. -->
+    <a class="btn btn-ember btn-sm topbar-cta" data-basket-send href="https://wa.me/5567991105206?text=Oi%20Julia!%20Quero%20fazer%20uma%20encomenda%20de%20biscoitos." target="_blank" rel="noopener">Encomendar<span class="cta-badge" data-basket-badge hidden></span></a>
+  </header>
+
+  <main id="conteudo" tabindex="-1">
+
+    <!-- Foto e texto deixam de disputar a mesma superfície.
+
+         O desenho anterior era foto + véu de papel + texto por cima. Isso
+         obriga a um acordo impossível: véu forte dá contraste ao texto e
+         apaga a foto; véu fraco mostra a foto e reprova o texto. Medido:
+         aliviando o véu o título caía de 9,34 para 4,98 e a linha de 5,29
+         para 3,04 — abaixo do piso de 4,5.
+
+         Aqui a foto fica limpa, sem véu nenhum, e o texto vai para uma
+         faixa de papel embaixo. Cada um com a superfície inteira. É a mesma
+         saída que a imagem de prévia usou para o mesmo impasse.
+
+         E é o que devolve o açúcar: sobre a foto crua ele tem 39 pontos de
+         claridade para subir, contra os 15 que sobravam debaixo do véu. -->
+    <section class="hero" id="topo">
+      <picture>
+        <source srcset="/img/hero-foto-sm.webp" media="(max-width: 760px)" />
+        <img class="hero-foto" src="/img/hero-foto.webp" width="1600" height="900"
+             fetchpriority="high" decoding="async"
+             alt="Tigela cheia de casadinhos de goiabada polvilhados de açúcar" />
+      </picture>
+      <div class="hero-veil" aria-hidden="true"></div>
+
+      <!-- Os pontinhos ficam ACIMA do véu. Embaixo dele herdariam a mesma
+           lavagem e sumiriam; acima, mantêm a força com que foram
+           desenhados — foi assim que rodaram no hero antigo do celular. -->
+      <div class="fall fall-far" aria-hidden="true"></div>
+      <div class="fall fall-near" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <!-- O nome virou a logo. O h1 continua sendo h1 — quem usa leitor
+             de tela ouve "Doce Miúdo da Ju" pelo alt, e a estrutura da
+             página não muda. -->
+        <h1 class="hero-title">
+          <picture>
+            <source srcset="/img/logo-sm.webp" media="(max-width: 760px)" />
+            <img class="hero-logo" src="/img/logo.webp" width="860" height="877"
+                 fetchpriority="high" decoding="async" alt="Doce Miúdo da Ju" />
+          </picture>
+        </h1>
+        <p class="hero-label">Biscoitos artesanais, Campo Grande, MS</p>
+        <a class="btn btn-ember hero-cta" href="#cardapio">
+          Fazer uma encomenda
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="sobre">
+      <!-- SEM O ROSTO DELA, DE PROPOSITO.
+
+           A Julia tem 12 anos. Rosto de crianca em pagina publica, indexada
+           pelo Google e apontada pelo Instagram, e' exposicao que nao se
+           desfaz depois. A foto original mostrava o rosto e foi cortada:
+           ficam as maos, o pote de casadinhos e o saquinho sendo enchido.
+
+           Nao se perde nada do que a foto provava. Mao de crianca fazendo o
+           trabalho com cuidado diz o mesmo que o texto ao lado promete — e
+           quem "e' a Ju" ja' e' dito pela ilustracao, que esta' no hero, no
+           rodape e na cesta. Desenho nao identifica ninguem.
+
+           Ela sangra pela direita e fica a 50%, com o texto por cima. Nao e'
+           fundo da secao inteira porque a foto e' vertical: esticada para
+           uma faixa larga, viraria uma fatia sem assunto. A 65% o texto de
+           corpo cai para 3,95 de contraste, abaixo do piso de 4,5. -->
+      <img class="sobre-foto" src="/img/ju-maos.webp" width="702" height="850"
+           loading="lazy" decoding="async"
+           alt="Mãos tirando casadinhos de goiabada de um pote para embalar num saquinho" />
+
+      <div class="shell about">
+        <div>
+          <p class="label">Quem faz</p>
+          <h2 class="section-title">A Julia tem 12 anos e faz os biscoitos</h2>
+          <p class="about-lead">
+            Ela fez o curso de cozinheirinhos do IGA e quer ter um negócio
+            só dela. Por enquanto, cada encomenda sai da cozinha de casa.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cardapio">
+      <div class="shell">
+        <div class="menu-head reveal">
+          <h2 class="menu-title">Cardápio</h2>
+          <p class="price-note">
+            <strong>R$ 18</strong> o pacote de 250 g
+          </p>
+        </div>
+
+        <ul class="flavors" data-flavors>
+          <li class="flavor reveal">
+            <div class="flavor-foto">
+              <img src="./img/sabores/amanteigado-400.webp"
+                   srcset="./img/sabores/amanteigado-400.webp 400w, ./img/sabores/amanteigado-800.webp 800w, ./img/sabores/amanteigado-1200.webp 1200w"
+                   sizes="(max-width: 560px) calc(100vw - 2.5rem), (max-width: 900px) 44vw, 30vw"
+                   width="800" height="800" loading="lazy" decoding="async"
+                   alt="Biscoitos amanteigados dourados, num prato branco sobre mesa de madeira" />
+            </div>
+            <p class="flavor-meta"><span class="flavor-num">01</span></p>
+            <h3 class="flavor-name">Amanteigado</h3>
+            <p class="flavor-desc">Biscoito amanteigado que esfarela na mão e derrete na boca.</p>
+            <button class="btn btn-ghost btn-sm" type="button" data-add="Amanteigado">Adicionar</button>
+          </li>
+
+          <li class="flavor reveal">
+            <div class="flavor-foto">
+              <img src="./img/sabores/casadinho-400.webp"
+                   srcset="./img/sabores/casadinho-400.webp 400w, ./img/sabores/casadinho-800.webp 800w, ./img/sabores/casadinho-1200.webp 1200w"
+                   sizes="(max-width: 560px) calc(100vw - 2.5rem), (max-width: 900px) 44vw, 30vw"
+                   width="800" height="800" loading="lazy" decoding="async"
+                   alt="Casadinhos de goiabada polvilhados de açúcar, num prato branco sobre mesa de madeira" />
+            </div>
+            <p class="flavor-meta"><span class="flavor-num">02</span></p>
+            <h3 class="flavor-name">Casadinho de goiabada</h3>
+            <p class="flavor-desc">Dois biscoitos amanteigados com goiabada no meio.</p>
+            <button class="btn btn-ghost btn-sm" type="button" data-add="Casadinho de goiabada">Adicionar</button>
+          </li>
+
+          <li class="flavor reveal">
+            <div class="flavor-foto">
+              <img src="./img/sabores/chocolate-400.webp"
+                   srcset="./img/sabores/chocolate-400.webp 400w, ./img/sabores/chocolate-800.webp 800w, ./img/sabores/chocolate-1200.webp 1200w"
+                   sizes="(max-width: 560px) calc(100vw - 2.5rem), (max-width: 900px) 44vw, 30vw"
+                   width="800" height="800" loading="lazy" decoding="async"
+                   alt="Biscoitos de chocolate redondos, num prato branco sobre mesa de madeira" />
+            </div>
+            <p class="flavor-meta"><span class="flavor-num">03</span></p>
+            <h3 class="flavor-name">Chocolate</h3>
+            <p class="flavor-desc">Biscoito amanteigado de chocolate.</p>
+            <button class="btn btn-ghost btn-sm" type="button" data-add="Chocolate">Adicionar</button>
+          </li>
+
+          <li class="flavor reveal">
+            <div class="flavor-foto">
+              <img src="./img/sabores/avela-400.webp"
+                   srcset="./img/sabores/avela-400.webp 400w, ./img/sabores/avela-800.webp 800w, ./img/sabores/avela-1200.webp 1200w"
+                   sizes="(max-width: 560px) calc(100vw - 2.5rem), (max-width: 900px) 44vw, 30vw"
+                   width="800" height="800" loading="lazy" decoding="async"
+                   alt="Casadinhos com recheio de creme de avelã, polvilhados de açúcar, num prato branco sobre mesa de madeira" />
+            </div>
+            <p class="flavor-meta"><span class="flavor-num">04</span></p>
+            <h3 class="flavor-name">Casadinho de creme de avelã</h3>
+            <p class="flavor-desc">Dois biscoitos amanteigados com recheio de creme de avelã.</p>
+            <button class="btn btn-ghost btn-sm" type="button" data-add="Casadinho de creme de avelã">Adicionar</button>
+          </li>
+
+          <li class="flavor reveal">
+            <div class="flavor-foto">
+              <img src="./img/sabores/avela-choc-400.webp"
+                   srcset="./img/sabores/avela-choc-400.webp 400w, ./img/sabores/avela-choc-800.webp 800w, ./img/sabores/avela-choc-1200.webp 1200w"
+                   sizes="(max-width: 560px) calc(100vw - 2.5rem), (max-width: 900px) 44vw, 30vw"
+                   width="800" height="800" loading="lazy" decoding="async"
+                   alt="Casadinhos de massa de chocolate com recheio de creme de avelã, num prato branco sobre mesa de madeira" />
+            </div>
+            <p class="flavor-meta"><span class="flavor-num">05</span></p>
+            <h3 class="flavor-name">Casadinho de creme de avelã (chocolate)</h3>
+            <p class="flavor-desc">Dois biscoitos amanteigados de chocolate com recheio de creme de avelã.</p>
+            <button class="btn btn-ghost btn-sm" type="button" data-add="Casadinho de creme de avelã (chocolate)">Adicionar</button>
+          </li>
+
+          <li class="flavor reveal">
+            <div class="flavor-foto">
+              <img src="./img/sabores/cafe-400.webp"
+                   srcset="./img/sabores/cafe-400.webp 400w, ./img/sabores/cafe-800.webp 800w, ./img/sabores/cafe-1200.webp 1200w"
+                   sizes="(max-width: 560px) calc(100vw - 2.5rem), (max-width: 900px) 44vw, 30vw"
+                   width="800" height="800" loading="lazy" decoding="async"
+                   alt="Biscoitos de café em formato de grão de café, num prato branco sobre mesa de madeira" />
+            </div>
+            <p class="flavor-meta"><span class="flavor-num">06</span></p>
+            <h3 class="flavor-name">Café</h3>
+            <p class="flavor-desc">Biscoito amanteigado com um gostinho de café que aparece no fim e quebra o doce.</p>
+            <button class="btn btn-ghost btn-sm" type="button" data-add="Café">Adicionar</button>
+          </li>
+        </ul>
+
+        <!-- Uma linha só, no rodapé do cardápio: quem tem restrição
+             precisa da informação, mas ela não pode roubar a leitura dos
+             sabores. -->
+        <p class="menu-note reveal">
+          Duram 30 dias em pote fechado, sem nenhum conservante. Contém
+          glúten, leite e soja. Os sabores de creme de avelã também levam
+          avelã.
+        </p>
+
+        <!-- Ela só existe depois que a cesta nasce: é a resposta ao gesto
+             de escolher um sabor, não um enfeite que já estava lá. Mesma
+             técnica do rodapé — recorte com alfa, imagem parada por
+             padrão, vídeo só depois que o canvas confirma. -->
+        <div class="basket-wrap">
+          <div class="bandeja" data-bandeja aria-hidden="true" hidden>
+            <img class="bandeja-still" src="/img/ju-bandeja.webp" alt=""
+                 width="380" height="480" loading="lazy" decoding="async" />
+            <video class="bandeja-video" muted loop playsinline preload="none"
+                   width="380" height="480" hidden>
+              <source src="/img/ju-bandeja.webm" type="video/webm" />
+            </video>
+          </div>
+
+        <!-- O visitante monta o pedido aqui e a mensagem sai pronta. -->
+        <div class="basket" data-basket hidden>
+          <!-- No celular esta linha É a cesta: fica fixa acima da barra de
+               navegação, e o detalhe abre ao tocar nela. No desktop ela
+               some, porque lá o trilho já mostra tudo o tempo todo. -->
+          <button class="basket-toggle" type="button" data-basket-toggle
+                  aria-expanded="false" aria-controls="pedido-detalhe">
+            <span class="basket-resumo">
+              <span class="basket-count" data-basket-count></span>
+              <span class="basket-total" data-basket-total>R$ 0</span>
+            </span>
+            <span class="basket-ver" data-basket-ver>ver</span>
+          </button>
+
+          <div class="basket-body" id="pedido-detalhe">
+            <p class="basket-label">Seu pedido</p>
+            <ul class="basket-list" data-basket-list></ul>
+            <div class="basket-foot">
+              <div>
+                <p class="basket-total" data-basket-total>R$ 0</p>
+              </div>
+              <a class="btn btn-wa" data-basket-send href="#" target="_blank" rel="noopener">
+                Enviar pelo WhatsApp
+              </a>
+            </div>
+          </div>
+
+          <!-- Fora do corpo que recolhe: no celular o botão precisa
+               continuar na barra mesmo com o detalhe fechado. -->
+          <a class="btn btn-wa basket-enviar-barra" data-basket-send href="#" target="_blank" rel="noopener">
+            Enviar
+          </a>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Uma batida de imagem entre o cardápio e o "Como pedir".
+
+         Vem DEPOIS das seis fotos reais de propósito: é imagem gerada, e
+         ali ninguém a confunde com foto de produto. O que ela traz é o
+         gesto — mão pegando um biscoito é o gatilho de apetite mais forte
+         que existe numa página de comida — logo antes de a pessoa ler como
+         encomendar.
+
+         Chegou escura (luminância 43,5 contra 61,5 das fotos do cardápio,
+         por ser contraluz de janela) e foi clareada até 57. -->
+    <figure class="faixa-foto reveal">
+      <picture>
+        <source srcset="/img/faixa-mao-sm.webp" media="(max-width: 760px)" />
+        <img src="/img/faixa-mao.webp" width="1800" height="1005"
+             loading="lazy" decoding="async"
+             alt="Uma mão pegando um casadinho de goiabada de um monte deles, com uma xícara de café fumegando ao lado" />
+      </picture>
+    </figure>
+
+    <section class="section" id="como-pedir">
+      <div class="shell steps-layout">
+        <!-- Sem o rótulo pequeno em cima: ele dizia "Como pedir" e o título
+             dizia outra coisa. Agora que o título é "Como pedir", o rótulo
+             seria eco — então o traço subiu para cima do título, como no
+             "Cardápio". -->
+        <div class="steps-aside reveal">
+          <h2 class="section-title steps-title">Como pedir</h2>
+          <!-- A seção ensinava a pedir e não deixava pedir: terminava no
+               terceiro passo e a pessoa tinha que caçar o WhatsApp na barra.
+               No desktop este bloco é fixo na rolagem, então o botão
+               acompanha os três passos. -->
+          <a class="btn btn-ember steps-cta" href="https://wa.me/5567991105206?text=Oi%20Julia!%20Quero%20fazer%20uma%20encomenda%20de%20biscoitos." target="_blank" rel="noopener">
+            Mandar mensagem para a Ju
+          </a>
+        </div>
+
+        <ol class="steps" data-steps>
+          <li class="step reveal">
+            <img class="step-art" src="./img/passo-escolher.webp" alt="" width="128" height="112" loading="lazy" decoding="async" aria-hidden="true" />
+            <h3>Escolha os sabores</h3>
+            <p>Pode misturar quantos quiser no mesmo pedido.</p>
+          </li>
+          <li class="step reveal">
+            <img class="step-art" src="./img/passo-prazo.webp" alt="" width="128" height="129" loading="lazy" decoding="async" aria-hidden="true" />
+            <h3>Encomende com antecedência</h3>
+            <p>A gente confirma a data pela agenda da semana.</p>
+          </li>
+          <li class="step reveal">
+            <img class="step-art" src="./img/passo-receber.webp" alt="" width="128" height="104" loading="lazy" decoding="async" aria-hidden="true" />
+            <h3>Combine e receba</h3>
+            <p>Entrega ou retirada em Campo Grande. Pix, débito ou crédito.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Metade de cima do desenho. A quina da bancada cai exatamente na
+         divisa com o rodapé, e a outra metade continua lá dentro, em
+         creme. É desenho, não informação: fica fora do fluxo de leitura
+         para quem usa leitor de tela. -->
+    <div class="band" aria-hidden="true">
+      <div class="band-clip">
+        <img class="band-art" src="./img/bancada-traco.webp" alt=""
+             width="1400" height="429" loading="lazy" decoding="async" />
+      </div>
+    </div>
+
+  </main>
+
+
+  <footer class="footer">
+    <!-- Continuação do mesmo desenho, agora sobre o marrom: o pano acaba
+         de cair e as linhas do armário seguem. Mesma imagem, deslocada
+         para o ponto exato onde o pedaço de cima parou, e invertida para
+         creme porque traço escuro sobre fundo escuro não existe. -->
+    <div class="band-tail" aria-hidden="true">
+      <div class="band-clip">
+        <img class="band-art" src="./img/bancada-traco.webp" alt=""
+             width="1400" height="429" loading="lazy" decoding="async" />
+      </div>
+    </div>
+    <div class="shell">
+      <div class="footer-grid">
+        <div>
+          <p class="footer-brand">Doce Miúdo da <em>Ju</em></p>
+        </div>
+        <!-- Ela se despede no fim da página. É vídeo com canal alfa (WebM
+             VP9) e não um retângulo: o rodapé tem textura por baixo, e
+             fundo chapado apareceria como remendo. Nem todo navegador
+             decodifica alfa em vídeo — então a imagem parada é o que está
+             lá por padrão, e o vídeo só entra depois que o JS confirma,
+             num canvas de 4x4, que a transparência chegou mesmo. -->
+        <div class="aceno" data-aceno aria-hidden="true">
+          <img class="aceno-still" src="/img/ju-aceno.webp" alt=""
+               width="440" height="520" loading="lazy" decoding="async" />
+          <video class="aceno-video" muted loop playsinline preload="none"
+                 width="440" height="520" hidden>
+            <source src="/img/ju-aceno.webm" type="video/webm" />
+          </video>
+        </div>
+
+        <!-- A última coisa que a pessoa vê depois de ler tudo precisa ter
+             para onde ir: antes daqui o rodapé terminava sem convite. -->
+        <div class="footer-cta">
+          <a class="btn btn-ember" href="https://wa.me/5567991105206?text=Oi%20Julia!%20Quero%20fazer%20uma%20encomenda%20de%20biscoitos." target="_blank" rel="noopener">
+            Fazer uma encomenda
+          </a>
+          <a class="footer-phone" href="https://wa.me/5567991105206?text=Oi%20Julia!%20Quero%20fazer%20uma%20encomenda%20de%20biscoitos." target="_blank" rel="noopener">(67) 9 9110-5206</a>
+          <!-- O perfil apontava para o site desde agosto e o site não
+               apontava de volta: quem gostava não tinha para onde ir, e é
+               no Instagram que ela publica. Endereço sem o "?igsi=", que é
+               rastreamento de compartilhamento e não parte do perfil.
+               O glifo é de traço, como os da barra do celular: a marca do
+               Instagram em degradê seria a única cor de fora da paleta. -->
+          <a class="footer-social" href="https://www.instagram.com/docemiudodaju/" target="_blank" rel="me noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <path d="M17.5 6.5h.01" />
+            </svg>
+            @docemiudodaju
+          </a>
+        </div>
+      </div>
+      <p class="footer-line footer-note">Doce Miúdo da Ju. Biscoitos artesanais em Campo Grande, Mato Grosso do Sul.</p>
+    </div>
+  </footer>
+
+  <nav class="tabbar" aria-label="Navegação">
+    <a class="tab" href="#topo" data-tab="topo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8" /><path d="M5 10v10h5v-6h4v6h5V10" /></svg>
+      Início
+    </a>
+    <a class="tab" href="#sobre" data-tab="sobre">
+      <!-- Touca de chef no lugar do ⓘ genérico. Desenhada em traço, e não
+           com a ilustração da logo: os quatro ícones desta barra são um
+           conjunto de linhas, e uma figura colorida no meio quebraria ele. -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.4 13a3.2 3.2 0 0 1 .3-6.4 3.4 3.4 0 0 1 5.3-2.1 3.4 3.4 0 0 1 5.3 2.1 3.2 3.2 0 0 1 .3 6.4" /><path d="M6.4 13h11.2v4.6a1 1 0 0 1-1 1H7.4a1 1 0 0 1-1-1z" /><path d="M9.9 13v5.6M14.1 13v5.6" /></svg>
+      Quem faz
+    </a>
+    <a class="tab" href="#cardapio" data-tab="cardapio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z" /><path d="M8 9h8M8 13h5" /></svg>
+      Cardápio
+    </a>
+    <a class="tab tab-wa" href="https://wa.me/5567991105206?text=Oi%20Julia!%20Quero%20fazer%20uma%20encomenda%20de%20biscoitos." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5C11.5 9.3 11 8 10.8 7.6c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 2 3 4.7 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.2-1.3-.1-.1-.3-.2-.5-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5C8.3 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.1 1 1-3-.2-.3C3.6 15 3 13.5 3 12c0-5 4-9 9-9s9 4 9 9-4 9-9 9z"/></svg>
+      Pedir
+    </a>
+  </nav>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
