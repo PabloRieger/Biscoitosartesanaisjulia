@@ -763,7 +763,6 @@ a { color: inherit; }
   .menu-head { grid-template-columns: 1fr; }
   .price-note { text-align: left; }
 }
-.price-note strong { color: var(--ink); font-weight: 500; }
 
 /* Lista, não grade de cartões: o cardápio de uma casa se lê em linhas,
    e assim nenhum item fica órfão numa fileira sozinho. */
@@ -909,9 +908,11 @@ a { color: inherit; }
   display: grid;
   gap: 0.85rem;
 }
+/* Eram três colunas — nome, preço unitário, controle. Sem preço, sobram
+   duas. */
 .basket-item {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: 1rem;
   animation: rise 0.35s var(--ease-out) both;
@@ -920,14 +921,6 @@ a { color: inherit; }
   from { opacity: 0; transform: translateY(-6px); }
 }
 .basket-item-name { font-size: var(--t-small); }
-.basket-item-unit {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  color: rgba(247, 236, 235, 0.55);
-  white-space: nowrap;
-}
-/* O realce do preço com desconto vivia aqui: ele acendia uma vez quando a
-   pessoa chegava aos 10 do mesmo sabor. Saiu com o desconto. */
 
 .stepper {
   display: inline-flex;
@@ -962,20 +955,15 @@ a { color: inherit; }
   font-size: var(--t-small);
   font-variant-numeric: tabular-nums;
 }
+/* O pé era total à esquerda, botão à direita. Sem total, o botão é o pé
+   inteiro e toma a largura toda — meio botão solto num canto pareceria
+   sobra de algo que saiu. */
 .basket-foot {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
   padding-top: 1.25rem;
   border-top: 1px solid rgba(247, 236, 235, 0.14);
 }
-.basket-total {
-  font-family: var(--mono);
-  font-size: 1.75rem;
-  font-variant-numeric: tabular-nums;
-}
+.basket-foot .btn { width: 100%; justify-content: center; }
 
 /* A linha-resumo. Só existe no celular; no desktop as duas regras acima a
    escondem, junto com o botão curto. */
@@ -994,14 +982,15 @@ a { color: inherit; }
   cursor: pointer;
 }
 .basket-resumo { display: grid; gap: 0.1rem; }
+/* Era a legenda miúda em versalete sobre o total. Virou a linha principal,
+   então cresceu e tomou a cor do texto. Sem caixa alta nem espacejamento
+   largo de propósito: "10 potes, 6 sabores" é a maior frase que ela produz
+   e precisa caber ao lado do "ver" numa tela de 360px. */
 .basket-count {
   font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--crust);
+  font-size: 1.05rem;
+  line-height: 1.2;
 }
-.basket-toggle .basket-total { font-size: 1.35rem; line-height: 1.1; }
 .basket-ver {
   font-family: var(--mono);
   font-size: var(--t-label);
@@ -1054,16 +1043,12 @@ a { color: inherit; }
      "Casadinho de creme de avelã (chocolate)". No celular a lista é larga e
      continua em linha única. */
   .basket-item {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr;
     row-gap: 0.5rem;
   }
-  .basket-item-name { grid-column: 1 / -1; }
-  .basket-foot {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
-  }
-  .basket-foot .btn { width: 100%; justify-content: center; }
+  /* O nome fica sozinho na primeira linha e o controle desce para a
+     direita, embaixo dele. */
+  .basket-item .stepper { justify-self: end; }
 }
 
 /* TRÊS COLUNAS, MAS SÓ ONDE CABEM
@@ -1401,9 +1386,9 @@ a { color: inherit; }
   /* A CESTA NO CELULAR
 
      Não sobra largura para trilho, então ela desce para uma barra fixa
-     logo acima da navegação: quem escolhe vê o total sem sair do produto.
-     O cartão inteiro sai do fluxo da página — ficar nos dois lugares
-     mostraria o mesmo total duas vezes na mesma tela.
+     logo acima da navegação: quem escolhe vê o pedido crescer sem sair do
+     produto. O cartão inteiro sai do fluxo da página — ficar nos dois
+     lugares mostraria o mesmo pedido duas vezes na mesma tela.
 
      Fechada, a barra é uma linha. Tocar nela abre o detalhe com os
      controles de quantidade. */

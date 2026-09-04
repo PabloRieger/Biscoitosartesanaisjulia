@@ -1,10 +1,10 @@
 const WHATSAPP = "5567991105206";
-// Preço único. Havia um desconto de R$ 12 a partir de 10 pacotes do mesmo
-// sabor, e ele saiu junto com a subida para R$ 18: sem faixas, o total é a
-// conta mais simples que existe e não precisa ser somado linha a linha.
-const PRECO = 18;
+// O site não publica preço. A cesta serve para montar a lista de potes; o
+// valor a Julia passa na conversa, onde ela pode considerar a quantidade e
+// a data. Por isso aqui não há tabela nem soma — só contagem.
 
-const money = (v) => `R$ ${String(v).replace(".", ",")}`;
+// A unidade de venda é o pote de 500 ml.
+const potes = (n) => `${n} ${n === 1 ? "pote" : "potes"}`;
 
 export function initBasket() {
   const root = document.querySelector("[data-basket]");
@@ -13,10 +13,9 @@ export function initBasket() {
   const badgeEl = document.querySelector("[data-basket-badge]");
   const toggleEl = document.querySelector("[data-basket-toggle]");
   const verEl = document.querySelector("[data-basket-ver]");
-  // O total aparece em dois lugares (a barra do celular e o pé do cartão) e
-  // o link do WhatsApp em três, contando o botão da barra de cima. Todos
-  // precisam dizer a mesma coisa, então são listas, não elementos únicos.
-  const totalEls = document.querySelectorAll("[data-basket-total]");
+  // O link do WhatsApp aparece em três lugares, contando o botão da barra
+  // de cima. Todos precisam mandar o mesmo pedido, então é lista, não
+  // elemento único.
   const sendEls = document.querySelectorAll("[data-basket-send]");
   if (!root || !list) return;
 
@@ -31,20 +30,24 @@ export function initBasket() {
 
   const items = new Map();
 
-  function totals() {
+  function contar() {
     let count = 0;
     items.forEach((qty) => (count += qty));
-    return { count, total: count * PRECO };
+    return count;
   }
 
-  function message({ count, total }) {
+  // A mensagem termina perguntando o valor. Sem preço na página, é a
+  // primeira coisa que a pessoa ia querer saber, e assim ela já chega
+  // perguntada — a Julia responde de uma vez em vez de trocar duas
+  // mensagens só para chegar na pergunta.
+  function message(count) {
     const lines = [];
     items.forEach((qty, name) => {
-      lines.push(`${qty}x ${name} = ${money(qty * PRECO)}`);
+      lines.push(`${qty}x ${name}`);
     });
-    return `Oi Julia! Quero encomendar:\n${lines.join("\n")}\n\n${count} ${
-      count === 1 ? "pacote" : "pacotes"
-    } no total: ${money(total)}`;
+    return `Oi Julia! Quero encomendar:\n${lines.join("\n")}\n\n${potes(
+      count
+    )} no total. Quanto fica?`;
   }
 
   function change(name, delta) {
@@ -61,10 +64,6 @@ export function initBasket() {
     const label = document.createElement("span");
     label.className = "basket-item-name";
     label.textContent = name;
-
-    const price = document.createElement("span");
-    price.className = "basket-item-unit";
-    price.textContent = `${money(PRECO)} cada`;
 
     const stepper = document.createElement("div");
     stepper.className = "stepper";
@@ -84,7 +83,7 @@ export function initBasket() {
       minus.setAttribute("aria-label", `Tirar ${name} do pedido`);
     } else {
       minus.textContent = "−";
-      minus.setAttribute("aria-label", `Tirar um pacote de ${name}`);
+      minus.setAttribute("aria-label", `Tirar um pote de ${name}`);
     }
     minus.addEventListener("click", () => change(name, -1));
 
@@ -95,11 +94,11 @@ export function initBasket() {
     const plus = document.createElement("button");
     plus.type = "button";
     plus.textContent = "+";
-    plus.setAttribute("aria-label", `Mais um pacote de ${name}`);
+    plus.setAttribute("aria-label", `Mais um pote de ${name}`);
     plus.addEventListener("click", () => change(name, 1));
 
     stepper.append(minus, out, plus);
-    li.append(label, price, stepper);
+    li.append(label, stepper);
     return li;
   }
 
@@ -120,26 +119,24 @@ export function initBasket() {
     list.textContent = "";
     items.forEach((qty, name) => list.append(row(name, qty)));
 
-    const t = totals();
-    totalEls.forEach((el) => (el.textContent = money(t.total)));
+    const count = contar();
 
-    // "3 pacotes, 2 sabores" — a barra do celular mostra só isto e o total,
-    // porque a linha inteira precisa caber numa tela de 360px.
+    // "3 potes, 2 sabores" — sem o total, esta linha virou o resumo inteiro
+    // da barra do celular, então precisa caber sozinha numa tela de 360px.
     if (countEl) {
-      const pacotes = `${t.count} ${t.count === 1 ? "pacote" : "pacotes"}`;
       const sabores = `${items.size} ${items.size === 1 ? "sabor" : "sabores"}`;
-      countEl.textContent = `${pacotes}, ${sabores}`;
+      countEl.textContent = `${potes(count)}, ${sabores}`;
     }
     if (badgeEl) {
       badgeEl.hidden = false;
-      badgeEl.textContent = t.count;
-      badgeEl.setAttribute("aria-label", `${t.count} no pedido`);
+      badgeEl.textContent = count;
+      badgeEl.setAttribute("aria-label", `${count} no pedido`);
     }
 
     // A dica que vivia aqui apontava o sabor mais perto de fechar os 10 do
     // desconto. Sem desconto, ela não tem o que dizer.
 
-    const href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message(t))}`;
+    const href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message(count))}`;
     sendEls.forEach((el) => (el.href = href));
   }
 
