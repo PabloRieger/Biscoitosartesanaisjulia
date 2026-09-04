@@ -69,7 +69,6 @@
     "url": "https://docemiudo.gorie.com.br/",
     "sameAs": ["https://www.instagram.com/docemiudodaju/"],
     "telephone": "+5567991105206",
-    "priceRange": "R$ 18",
     "servesCuisine": "Biscoitos artesanais",
     "areaServed": { "@type": "City", "name": "Campo Grande", "addressRegion": "MS" },
     "paymentAccepted": "Pix, cartão de débito, cartão de crédito",
@@ -79,12 +78,12 @@
         "@type": "MenuSection",
         "name": "Biscoitos",
         "hasMenuItem": [
-          { "@type": "MenuItem", "name": "Amanteigado", "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "BRL", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 250, "unitCode": "GRM" } } },
-          { "@type": "MenuItem", "name": "Casadinho de goiabada", "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "BRL", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 250, "unitCode": "GRM" } } },
-          { "@type": "MenuItem", "name": "Chocolate", "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "BRL", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 250, "unitCode": "GRM" } } },
-          { "@type": "MenuItem", "name": "Casadinho de creme de avelã", "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "BRL", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 250, "unitCode": "GRM" } } },
-          { "@type": "MenuItem", "name": "Casadinho de creme de avelã (chocolate)", "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "BRL", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 250, "unitCode": "GRM" } } },
-          { "@type": "MenuItem", "name": "Café", "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "BRL", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 250, "unitCode": "GRM" } } }
+          { "@type": "MenuItem", "name": "Amanteigado", "offers": { "@type": "Offer", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 500, "unitCode": "MLT" } } },
+          { "@type": "MenuItem", "name": "Casadinho de goiabada", "offers": { "@type": "Offer", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 500, "unitCode": "MLT" } } },
+          { "@type": "MenuItem", "name": "Chocolate", "offers": { "@type": "Offer", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 500, "unitCode": "MLT" } } },
+          { "@type": "MenuItem", "name": "Casadinho de creme de avelã", "offers": { "@type": "Offer", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 500, "unitCode": "MLT" } } },
+          { "@type": "MenuItem", "name": "Casadinho de creme de avelã (chocolate)", "offers": { "@type": "Offer", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 500, "unitCode": "MLT" } } },
+          { "@type": "MenuItem", "name": "Café", "offers": { "@type": "Offer", "eligibleQuantity": { "@type": "QuantitativeValue", "value": 500, "unitCode": "MLT" } } }
         ]
       }
     }
@@ -197,9 +196,11 @@
       <div class="shell">
         <div class="menu-head reveal">
           <h2 class="menu-title">Cardápio</h2>
-          <p class="price-note">
-            <strong>R$ 18</strong> o pacote de 250 g
-          </p>
+          <!-- A nota dizia o preço e o tamanho. O preço saiu do site: quem
+               responde valor é a Julia na conversa, que aí pode olhar
+               quantidade e data. Sobra o tamanho, que a pessoa precisa
+               saber para decidir quantos quer. -->
+          <p class="price-note">Pote de 500 ml</p>
         </div>
 
         <ul class="flavors" data-flavors>
@@ -318,9 +319,11 @@
                some, porque lá o trilho já mostra tudo o tempo todo. -->
           <button class="basket-toggle" type="button" data-basket-toggle
                   aria-expanded="false" aria-controls="pedido-detalhe">
+            <!-- Eram duas linhas, a contagem miúda por cima do total em
+                 corpo grande. Sem o total, a contagem herdou o destaque:
+                 ela é o que a barra tem a dizer. -->
             <span class="basket-resumo">
               <span class="basket-count" data-basket-count></span>
-              <span class="basket-total" data-basket-total>R$ 0</span>
             </span>
             <span class="basket-ver" data-basket-ver>ver</span>
           </button>
@@ -328,10 +331,9 @@
           <div class="basket-body" id="pedido-detalhe">
             <p class="basket-label">Seu pedido</p>
             <ul class="basket-list" data-basket-list></ul>
+            <!-- O pé dividia o espaço entre o total e o botão. Sem total,
+                 o botão fica sozinho e ocupa a linha inteira. -->
             <div class="basket-foot">
-              <div>
-                <p class="basket-total" data-basket-total>R$ 0</p>
-              </div>
               <a class="btn btn-wa" data-basket-send href="#" target="_blank" rel="noopener">
                 Enviar pelo WhatsApp
               </a>
