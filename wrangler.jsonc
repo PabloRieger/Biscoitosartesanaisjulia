@@ -1,0 +1,16 @@
+{
+  // Sem este arquivo o `wrangler deploy` tenta adivinhar o framework, acha
+  // que é um projeto Vite de aplicação e exige o @cloudflare/vite-plugin
+  // (que só roda no Vite 6+). O site aqui é estático puro — HTML, CSS e um
+  // punhado de JS — então não precisa de plugin nenhum: basta apontar para
+  // a pasta que o `npm run build` gera.
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // Precisa bater com o nome do Worker que já existe no painel.
+  "name": "biscoito",
+  "compatibility_date": "2026-09-04",
+
+  "assets": {
+    "directory": "./dist"
+  }
+}
